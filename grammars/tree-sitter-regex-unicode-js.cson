@@ -6,31 +6,32 @@ parser: 'tree-sitter-regex-unicode-js'
 injectionRegex: '^regex-unicode-js$'
 
 scopes:
+  'regex': 'meta.pattern.regexp'
+  
   'disjunction_delimiter': 'keyword.operator.disjunction.regexp'
   
   #####  quantifiers  #####
   
   #'count_quantifier, one_or_more, zero_or_more, optional': 'storage.modifier'
   'zero_or_more, one_or_more, optional, count_quantifier': 'keyword.operator.quantifier.regexp'
-  'count_quantifier > count_quantifier_begin': 'punctuation.definition.quantifier.count.begin.regexp'
+  'count_quantifier > count_quantifier_value': 'constant.numeric.regexp'
   'count_quantifier > count_quantifier_delimiter': 'punctuation.definition.quantifier.count.delimiter.regexp'
-  'count_quantifier > count_quantifier_end': 'punctuation.definition.quantifier.count.end.regexp'
   
   #####  lookaround assertions  #####
   
   'lookahead_assertion': 'meta.group.assertion.look-ahead.regexp'
-  'lookahead_assertion > lookahead_identifier': 'meta.assertion.look-ahead.regexp'
+  'lookahead_assertion > lookahead_identifier': 'entity.name.type.look-ahead.regexp'
   'negative_lookahead_assertion': 'meta.group.assertion.negative-look-ahead.regexp'
-  'negative_lookahead_assertion > negative_lookahead_identifier': 'meta.assertion.negative-look-ahead.regexp'
+  'negative_lookahead_assertion > negative_lookahead_identifier': 'entity.name.type.negative-look-ahead.regexp'
   'lookbehind_assertion': 'meta.group.assertion.look-behind.regexp'
-  'lookbehind_assertion > lookbehind_identifier': 'meta.assertion.look-behind.regexp'
+  'lookbehind_assertion > lookbehind_identifier': 'entity.name.type.look-behind.regexp'
   'negative_lookbehind_assertion': 'meta.group.assertion.negative-look-behind.regexp'
-  'negative_lookbehind_assertion > negative_lookbehind_identifier': 'meta.assertion.negative-look-behind.regexp'
+  'negative_lookbehind_assertion > negative_lookbehind_identifier': 'entity.name.type.negative-look-behind.regexp'
   
   #####  groups and backreferences  #####
   
   'backreference_escape': 'keyword.other.back-reference.regexp'
-  'backreference_escape > group_name': 'entity.name.tag.regexp'	#TODO: change the scope for this?
+  'backreference_escape > group_name': 'entity.name.tag.regexp'
   
   'named_capturing_group': 'meta.group.capturing.named.regexp'
   'named_capturing_group > named_capturing_group_identifier': 'entity.name.type.named.regexp'
@@ -55,11 +56,13 @@ scopes:
   'character_class > character_range': 'constant.other.character-class.range.regexp'
   'character_class > character_range > range_delimiter': 'punctuation.definition.character-class.range.hyphen.regexp'
   
-  #####  character class escapes  #####
+  #####  character classes  #####
   
   'character_class_escape': 'constant.other.character-class.escape.regexp'
-  'unicode_property_name': 'constant.other.character-class.unicode.property-name.regexp'
-  'unicode_property_value': 'constant.other.character-class.unicode.property-value.regexp'
+  'character_class_escape > unicode_property_name': 'constant.other.character-class.unicode-property.name.regexp'
+  'character_class_escape > unicode_property_operator': 'keyword.operator.character-class.unicode-property.regexp'
+  'character_class_escape > unicode_property_value': 'constant.other.character-class.unicode-property.value.regexp'
+  'any_character': 'constant.other.character-class.any.regexp'
   
   #####  character escapes  #####
   
@@ -80,7 +83,3 @@ scopes:
   
   #'start_assertion, end_assertion, boundary_assertion, non_boundary_assertion': 'constant.character.character-class.regexp'
   'start_assertion, end_assertion, boundary_assertion, non_boundary_assertion': 'keyword.control.anchor.regexp'
-  
-  #####  characters  #####
-  
-  'any_character': 'constant.character.regexp'
