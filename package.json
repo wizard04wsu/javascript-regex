@@ -1,0 +1,22 @@
+{
+	"name": "javascript-regex",
+	"main": "./lib/javascript-regex",
+	"version": "0.0.0",
+	"description": "Improved syntax for JavaScript regular expressions",
+	"keywords": [
+		"syntax",
+		"javascript",
+		"regex"
+	],
+	"activationHooks": [
+		"source.js:root-scope-used",
+		"source.ts:root-scope-used",
+		"source.flow:root-scope-used"
+	],
+	"repository": "https://github.com/wizard04wsu/javascript-regex",
+	"license": "MIT",
+	"engines": {
+		"atom": ">=1.0.0 <2.0.0"
+	},
+	"dependencies": {}
+}
