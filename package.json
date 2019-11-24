@@ -18,5 +18,8 @@
 	"engines": {
 		"atom": ">=1.0.0 <2.0.0"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"tree-sitter-regex-js": "^0.0.0",
+		"tree-sitter-regex-unicode-js": "^0.0.0"
+	}
 }
