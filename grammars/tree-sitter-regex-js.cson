@@ -8,6 +8,8 @@ injectionRegex: '^regex-js$'
 scopes:
   'regex': 'meta.pattern.regexp'
   
+  'non_syntax_characters': 'string.unquoted'
+  
   'disjunction_delimiter': 'keyword.operator.disjunction.regexp'
   
   #####  quantifiers  #####
@@ -75,6 +77,12 @@ scopes:
   'control_letter_escape': 'constant.character.control.regexp'
   'control_letter_escape > control_letter_code': 'constant.character.control.character-code.regexp'
   'special_escape': 'constant.character.escape.special.regexp'
+  
+  'invalid_unicode_escape': 'constant.character.escape.backslash.invalid.regexp'
+  'invalid_unicode_escape > escape_operator': 'keyword.operator.escape-character.regexp'
+  'invalid_hexadecimal_escape': 'constant.character.escape.backslash.invalid.regexp'
+  'invalid_hexadecimal_escape > escape_operator': 'keyword.operator.escape-character.regexp'
+  'invalid_control_letter_escape': 'constant.other.invalid.regexp'
   
   #####  boundary assertions  #####
   

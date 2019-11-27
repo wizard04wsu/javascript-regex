@@ -8,6 +8,8 @@ injectionRegex: '^regex-unicode-js$'
 scopes:
   'regex': 'meta.pattern.regexp'
   
+  'non_syntax_characters': 'string.unquoted'
+  
   'disjunction_delimiter': 'keyword.operator.disjunction.regexp'
   
   #####  quantifiers  #####
