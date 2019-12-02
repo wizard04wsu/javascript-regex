@@ -8,7 +8,7 @@ injectionRegex: '^regex-unicode-js$'
 scopes:
   'regex': 'meta.pattern.regexp'
   
-  'non_syntax_characters': 'string.unquoted'
+  'non_syntax_character': 'constant.character'
   
   'disjunction_delimiter': 'keyword.operator.disjunction.regexp'
   
@@ -32,8 +32,8 @@ scopes:
   
   #####  groups and backreferences  #####
   
-  'backreference_escape': 'keyword.other.back-reference.regexp'
-  'backreference_escape > group_name': 'entity.name.tag.regexp'
+  'backreference': 'keyword.other.back-reference.regexp'
+  'backreference > group_name': 'entity.name.tag.regexp'
   
   'named_capturing_group': 'meta.group.capturing.named.regexp'
   'named_capturing_group > named_capturing_group_identifier': 'entity.name.type.named.regexp'
