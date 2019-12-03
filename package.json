@@ -19,7 +19,7 @@
 		"atom": ">=1.0.0 <2.0.0"
 	},
 	"dependencies": {
-		"tree-sitter-regex-js": "^0.0.0",
-		"tree-sitter-regex-unicode-js": "^0.0.0"
+		"tree-sitter-regex-js": "^1.0.0",
+		"tree-sitter-regex-unicode-js": "^1.0.0"
 	}
 }
