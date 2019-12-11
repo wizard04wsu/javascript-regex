@@ -67,27 +67,6 @@
 /[\c\t_]/u;
 
 
-//===== Octal Escapes =====
-
-//invalid
-/ \01/u;
-/ \07/u;
-/ \001/u;
-/ \007/u;
-/[\01]/u;
-/[\07]/u;
-/[\001]/u;
-/[\007]/u;
-/ \01_/u;
-/ \07_/u;
-/ \001_/u;
-/ \007_/u;
-/[\01_]/u;
-/[\07_]/u;
-/[\001_]/u;
-/[\007_]/u;
-
-
 //===== Hexadecimal Escapes =====
 
 //valid
@@ -103,16 +82,16 @@
 /[\x]/u;
 /[\xf]/u;
 /[\xz]/u;
-/ \x__/u;
-/ \xf_/u;
-/ \xfz_/u;
-/ \xz_/u;
-/ \x\t_/u;
-/[\x__]/u;
-/[\xf_]/u;
-/[\xfz_]/u;
-/[\xz_]/u;
-/[\x\t_]/u;
+/ \x_;/u;
+/ \xf_;/u;
+/ \xfz;/u;
+/ \xz;/u;
+/ \x\t;/u;
+/[\x_;]/u;
+/[\xf_;]/u;
+/[\xfz;]/u;
+/[\xz;]/u;
+/[\x\t;]/u;
 
 
 //===== Unicode Escapes =====
@@ -152,30 +131,27 @@
 /[\u{f]/u;
 /[\u{z]/u;
 /[\u{ffffff]/u;
-/ \u_/u;
-/ \u_z/u;
-/ \uf_/u;
-/ \uf_z/u;
-/ \uz_/u;
+/ \u_;/u;
+/ \uf_;/u;
+/ \uz;/u;
 / \u{_/u;
-/ \u{_z/u;
+/ \u{_;/u;
 / \u{}_/u;
-/ \u{f_/u;
-/ \u{f_z/u;
-/ \u{z_/u;
-/ \u{ffffff_/u;
+/ \u{f;;/u;
+/ \u{z;/u;
+/ \u{ffffff;/u;
 /[\u_]/u;
-/[\u_z]/u;
+/[\u_;]/u;
 /[\uf_]/u;
-/[\uf_z]/u;
+/[\uf_;]/u;
 /[\uz_]/u;
 /[\u{_]/u;
-/[\u{_z]/u;
+/[\u{_;]/u;
 /[\u{}_]/u;
 /[\u{f_]/u;
-/[\u{f_z]/u;
-/[\u{z_]/u;
-/[\u{ffffff_]/u;
+/[\u{f_;]/u;
+/[\u{z;]/u;
+/[\u{ffffff;]/u;
 
 
 //===== Identity Escapes =====
@@ -228,30 +204,22 @@
 /[\p{=]/u;
 /[\p{=b}]/u;
 /[\p{=}]/u;
-/ \p;/u;
-/ \p{;/u;
-/ \p{;_/u;
+/ \p;;/u;
+/ \p{;;/u;
 / \p{};/u;
-/ \p{a;/u;
-/ \p{a;_/u;
-/ \p{a=;/u;
-/ \p{a=;_/u;
-/ \p{a=b;/u;
-/ \p{a=b;_/u;
+/ \p{a;;/u;
+/ \p{a=;;/u;
+/ \p{a=b;;/u;
 / \p{=b;/u;
 / \p{=;/u;
 / \p{=b};/u;
 / \p{=};/u;
 /[\p;]/u;
-/[\p{;]/u;
-/[\p{;_]/u;
+/[\p{;;]/u;
 /[\p{};]/u;
-/[\p{a;]/u;
-/[\p{a;_]/u;
-/[\p{a=;]/u;
-/[\p{a=;_]/u;
-/[\p{a=b;]/u;
-/[\p{a=b;_]/u;
+/[\p{a;;]/u;
+/[\p{a=;;]/u;
+/[\p{a=b;;]/u;
 /[\p{=b;]/u;
 /[\p{=;]/u;
 /[\p{=b};]/u;
@@ -271,6 +239,7 @@
 /[a-a]/u;
 /[\t-a]/u;
 /[\t-\t]/u;
+/[a-\uffff]/u;
 /[a-\u{ffff}]/u;
 /[a-\d]/u;
 /[\d-a]/u;
@@ -283,8 +252,12 @@
 /[\^\$\\\.\*\+\?\(\)\[\]\{\}\|\/\-]/u;
 
 //invalid
+/[a-\x]/u;
+/[\x-z]/u;
 /[z-a]/u;	//range out of order
 /[a-\t]/u;	//range out of order
+new RegExp('[', 'u');
+/a]a/u;
 
 
 //===== Groups and Lookaround Assertions =====
@@ -304,12 +277,34 @@
 /(?<foo>)/u;
 /(?<foo>bar)/u;
 /(?<aA0_$\u0066oo>bar)/u;
+/(?<aa\u0066>bar)/u;
+/(?<aaa\u0066>bar)/u;
 
 //invalid
+/(?<foo>a)(?<foo>b)/u;	//duplicate group name
 /(?<>bar)/u;
 /(?<;>bar)/u;
 /(?<a;b;c>bar)/u;
-/(?<foo>a)(?<foo>b)/u;	//duplicate group name
+/ (?<#/u;
+/ (?<a/u;
+/ (?<#)/u;
+/ (?<a)/u;
+/(?<#>bar)/u;
+/(?<a\u>bar)/u;
+/(?<\uf>bar)/u;
+/(?<\t>bar)/u;
+/ (?<#a;/u;
+/ (?<aa;/u;
+/ (?<#a;);/u;
+/ (?<a;);/u;
+/(?<a>b/u;
+/(a/u;
+/(?:a/u;
+/(?=a/u;
+/(?!a/u;
+/(?<=a/u;
+/(?<!a/u;
+/);/u;
 
 
 //===== Backreferences =====
@@ -324,23 +319,31 @@
 //invalid
 / \k/u;
 / \k</u;
+/ \k<;/u;
 / \k<a/u;
+/ \k<\u/u;
+/ \k<\uf/u;
 / \k<\u0066/u;
 / \k<\u0066oo/u;
-/ \k<a;b/u;
-/ \k<>/u;
-/ \k<;>/u;
-/ \k<;;>/u;
-/ \k<a;b>/u;
+/ \k<\t/u;
 / \k;/u;
 / \k<;;/u;
 / \k<a;;/u;
+/ \k<\u;;/u;
+/ \k<\uf;;/u;
 / \k<\u0066;;/u;
 / \k<\u0066oo;;/u;
+/ \k<\t;/u;
+/ \k<>/u;
+/ \k<;>/u;
+/ \k<\u>/u;
+/ \k<\uf>/u;
+/ \k<\t>/u;
 / \k<>;/u;
 / \k<;>;/u;
 / \k<;;>;/u;
-/ \k<a;b>;/u;
+/ \k<\uf;>;/u;
+/ \k<\t>;/u;
 
 
 //===== Disjunction =====
@@ -390,8 +393,12 @@
 /a?{1z_}_/u;
 /a?{,2}_/u;
 /a?{,_}_/u;
+/a}a/u;
 
 //invalid
+new RegExp('*', 'u');
+/+_/u;
+/?_/u;
 /a?*_/u;
 /a?+_/u;
 /a**_/u;
