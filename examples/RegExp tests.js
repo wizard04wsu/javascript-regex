@@ -92,9 +92,11 @@
 /[\uf]/;
 /[\u_]/;
 / \u{1}/;
-/ \u{f}/;
 /[\u{1}]/;
 /[\u{f}]/;
+
+//invalid
+/ \u{f}_/;
 
 
 //===== Identity Escapes =====
@@ -195,7 +197,7 @@ new RegExp('[');
 /(?!a/;
 /(?<=a/;
 /(?<!a/;
-/);/;
+/a);/;
 
 
 //===== Backreferences =====
@@ -206,6 +208,8 @@ new RegExp('[');
 / \k<aA0_$\u0066oo>/;
 / \k<\u0066>/;
 / \k<\u0066oo>/;
+/ \k<aa\u0066>/;
+/ \k<aaa\u0066>/;
 
 //accepted
 //`\k` is treated as an identity escape for 'k'

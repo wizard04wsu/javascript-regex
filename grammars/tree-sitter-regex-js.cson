@@ -32,8 +32,10 @@ scopes:
   
   #####  groups and backreferences  #####
   
-  'backreference': 'keyword.other.back-reference.regexp'
-  'backreference > group_name': 'entity.name.tag.regexp'
+  'numeric_backreference': 'keyword.other.back-reference.numeric.regexp'
+  'numeric_backreference > group_name': 'entity.name.tag.regexp'
+  'named_backreference': 'keyword.other.back-reference.named.regexp'
+  'named_backreference > group_name': 'entity.name.tag.regexp'
   
   'named_capturing_group': 'meta.group.capturing.named.regexp'
   'named_capturing_group > named_capturing_group_identifier': 'entity.name.type.named.regexp'
