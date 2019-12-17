@@ -8,7 +8,8 @@ injectionRegex: '^regex-js$'
 scopes:
   'regex': 'meta.pattern.regexp'
   
-  'non_syntax_character': 'constant.character'
+  'non_syntax': 'string.other.non-syntax'
+  'invalid': 'invalid'
   
   'disjunction_delimiter': 'keyword.operator.disjunction.regexp'
   
