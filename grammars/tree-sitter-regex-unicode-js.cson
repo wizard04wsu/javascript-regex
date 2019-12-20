@@ -8,7 +8,8 @@ injectionRegex: '^regex-unicode-js$'
 scopes:
   'regex': 'meta.pattern.regexp'
   
-  'non_syntax_character': 'constant.character'
+  'non_syntax': 'string.other.non-syntax'
+  'invalid': 'invalid'
   
   'disjunction_delimiter': 'keyword.operator.disjunction.regexp'
   
@@ -32,8 +33,10 @@ scopes:
   
   #####  groups and backreferences  #####
   
-  'backreference': 'keyword.other.back-reference.regexp'
-  'backreference > group_name': 'entity.name.tag.regexp'
+  'numeric_backreference': 'keyword.other.back-reference.numeric.regexp'
+  'numeric_backreference > group_name': 'entity.name.tag.regexp'
+  'named_backreference': 'keyword.other.back-reference.named.regexp'
+  'named_backreference > group_name': 'entity.name.tag.regexp'
   
   'named_capturing_group': 'meta.group.capturing.named.regexp'
   'named_capturing_group > named_capturing_group_identifier': 'entity.name.type.named.regexp'
@@ -80,6 +83,12 @@ scopes:
   'control_letter_escape': 'constant.character.control.regexp'
   'control_letter_escape > control_letter_code': 'constant.character.control.character-code.regexp'
   'special_escape': 'constant.character.escape.special.regexp'
+  
+  'invalid_unicode_escape': 'constant.character.escape.backslash.invalid.regexp'
+  'invalid_unicode_escape > escape_operator': 'keyword.operator.escape-character.regexp'
+  'invalid_hexadecimal_escape': 'constant.character.escape.backslash.invalid.regexp'
+  'invalid_hexadecimal_escape > escape_operator': 'keyword.operator.escape-character.regexp'
+  'invalid_control_letter_escape': 'constant.other.invalid.regexp'
   
   #####  boundary assertions  #####
   
