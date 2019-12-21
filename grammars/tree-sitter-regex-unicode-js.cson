@@ -76,6 +76,8 @@ scopes:
   'identity_escape > escape_operator': 'keyword.operator.escape-character.regexp'
   'unicode_escape': 'constant.character.numeric.unicode.regexp'
   'unicode_escape > unicode_code': 'constant.character.numeric.unicode.character-code.regexp'
+  'unicode_codepoint_escape': 'constant.character.numeric.unicode.regexp'
+  'unicode_codepoint_escape > unicode_code': 'constant.character.numeric.unicode.character-code.regexp'
   'octal_escape': 'constant.character.numeric.octal.regexp'
   'octal_escape > octal_code': 'constant.character.numeric.octal.character-code.regexp'
   'hexadecimal_escape': 'constant.character.numeric.hexadecimal.regexp'

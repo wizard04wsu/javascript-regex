@@ -98,60 +98,69 @@
 
 //valid
 /\uffff/u;
-/\u{f}/u;
-/\u{fffff}/u;
-/\u{10ffff}/u;
 /[\uffff]/u;
-/[\u{f}]/u;
-/[\u{fffff}]/u;
-/[\u{10ffff}]/u;
 /\uffff_/u;
-/\u{f}_/u;
-/\u{fffff}_/u;
-/\u{10ffff}_/u;
 /[\uffff_]/u;
-/[\u{f}_]/u;
-/[\u{fffff}_]/u;
-/[\u{10ffff}_]/u;
 
 //invalid
 /\u/u;
 /\uf/u;
 /\uz/u;
-/\u{/u;
-/\u{}/u;
-/\u{f/u;
-/\u{z/u;
-/\u{ffffff/u;
 /[\u]/u;
 /[\uf]/u;
 /[\uz]/u;
-/[\u{]/u;
-/[\u{}]/u;
-/[\u{f]/u;
-/[\u{z]/u;
-/[\u{ffffff]/u;
 /\u_;/u;
 /\uf_;/u;
 /\uz;/u;
-/\u{_/u;
-/\u{_;/u;
-/\u{}_/u;
-/\u{f;;/u;
-/\u{z;/u;
-/\u{ffffff;/u;
 /[\u_]/u;
 /[\u_;]/u;
 /[\uf_]/u;
 /[\uf_;]/u;
 /[\uz_]/u;
+
+
+//===== Unicode Code Point Escapes =====
+
+//valid
+/\u{f}/u;
+/\u{fffff}/u;
+/\u{10ffff}/u;
+/[\u{f}]/u;
+/[\u{fffff}]/u;
+/[\u{10ffff}]/u;
+/\u{f}_/u;
+/\u{fffff}_/u;
+/\u{10ffff}_/u;
+/[\u{f}_]/u;
+/[\u{fffff}_]/u;
+/[\u{10ffff}_]/u;
+
+//invalid
+/\u{/u;
+/\u{}/u;
+/\u{f/u;
+/\u{z/u;
+/\u{fffff0/u;
+/[\u{]/u;
+/[\u{}]/u;
+/[\u{f]/u;
+/[\u{z]/u;
+/[\u{fffff0]/u;
+/\u{_/u;
+/\u{_z/u;
+/\u{}_z;;/u;
+/\u{f;;/u;
+/\u{fz;/u;
+/\u{fz/u;
+/\u{z;/u;
+/\u{fffff0;/u;
 /[\u{_]/u;
 /[\u{_;]/u;
 /[\u{}_]/u;
 /[\u{f_]/u;
 /[\u{f_;]/u;
 /[\u{z;]/u;
-/[\u{ffffff;]/u;
+/[\u{fffff0;]/u;
 
 
 //===== Identity Escapes =====
@@ -185,13 +194,13 @@
 
 //invalid
 /\p/u;
-/ \p{/u;
+/\p{/u;
 /\p{}/u;
-/ \p{a/u;
-/ \p{a=/u;
+/\p{a/u;
+/\p{a=/u;
 /\p{a=b/u;
-/ \p{=b/u;
-/ \p{=/u;
+/\p{=b/u;
+/\p{=/u;
 /\p{=b}/u;
 /\p{=}/u;
 /[\p]/u;
@@ -316,11 +325,11 @@ new RegExp('[', 'u');
 //===== Backreferences =====
 
 //valid
-/ \1\9\10\999/u;
-/ \k<foo>/u;
-/ \k<aA0_$\u0066oo>/u;
-/ \k<\u0066>/u;
-/ \k<\u0066oo>/u;
+/\1\9\10\999/u;
+/\k<foo>/u;
+/\k<aA0_$\u0066oo>/u;
+/\k<\u0066>/u;
+/\k<\u0066oo>/u;
 /\k<aa\u0066>/u;
 /\k<aaa\u0066>/u;
 
