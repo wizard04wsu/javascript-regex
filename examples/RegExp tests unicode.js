@@ -290,6 +290,7 @@ new RegExp('[', 'u');
 /(?<aaa\u0066>bar)/u;
 
 //invalid
+/(foo/u;
 /(?<foo>a)(?<foo>b)/u;	//duplicate group name
 /(?<>bar)/u;
 /(?<;>bar)/u;
