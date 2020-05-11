@@ -1,5 +1,5 @@
 # javascript-regex
-[![](https://img.shields.io/apm/v/javascript-regex?logo=atom)](https://atom.io/packages/javascript-regex) [![](https://img.shields.io/apm/dm/javascript-regex)](https://atom.io/packages/javascript-regex)
+[![](https://img.shields.io/apm/v/javascript-regex)](https://atom.io/packages/javascript-regex) [![](https://img.shields.io/apm/dm/javascript-regex)](https://atom.io/packages/javascript-regex)
 
 Improved syntax for JavaScript regular expressions.
 
