@@ -6,7 +6,7 @@ Improved syntax for JavaScript regular expressions.
 Check out the [One Dark for Regex](https://atom.io/packages/one-dark-regex-syntax) theme for a practical use.
 
 This package implements two tree-sitter parsers:
-- [tree-sitter-regex-unicode-js](https://github.com/wizard04wsu/tree-sitter-regex-unicode-js) for regular expressions that have the unicode flag set
+- [tree-sitter-regex-unicode-js](https://github.com/wizard04wsu/tree-sitter-regex-unicode-js) for regular expressions that have the Unicode flag set
 - [tree-sitter-regex-js](https://github.com/wizard04wsu/tree-sitter-regex-js) for the rest
 
 # Troubleshooting
