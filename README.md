@@ -12,3 +12,5 @@ This package implements two tree-sitter parsers:
 # Troubleshooting
 ### Failure to load package grammars when I open Atom
 Whenever Atom is updated, this package needs to be rebuilt. Either click the red bug icon in the bottom-right corner of the window, or execute `Incompatible Packages: View` via the command palette. Then, click "Rebuild Packages". You'll have to restart Atom.
+
+If anyone has a better solution, please [let me know](https://github.com/wizard04wsu/javascript-regex/issues/9).
