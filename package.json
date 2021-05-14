@@ -1,7 +1,7 @@
 {
 	"name": "javascript-regex",
 	"main": "./lib/javascript-regex",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"description": "Improved syntax for JavaScript regular expressions",
 	"keywords": [
 		"syntax",
