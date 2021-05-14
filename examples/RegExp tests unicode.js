@@ -289,6 +289,7 @@ new RegExp('[', 'u');
 /(?<aa\u0066>bar)/u;
 /(?<aaa\u0066>bar)/u;
 /(a*)/u;
+/(foo|bar)/u;
 
 //invalid
 /(?<foo>a)(?<foo>b)/u;	//duplicate group name
@@ -334,7 +335,6 @@ new RegExp('[', 'u');
 /a(_*a/u;
 /a)*a/u;
 /a)_*a/u;
-/(foo|bar)/u;
 
 
 //===== Backreferences =====
