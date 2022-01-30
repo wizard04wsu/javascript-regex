@@ -21,6 +21,7 @@
 	"main": "index.js",
 	"dependencies": {
 		"tree-sitter-regex-js": "^2.0.0",
-		"tree-sitter-regex-unicode-js": "^2.0.0"
+		"tree-sitter-regex-unicode-js": "^2.0.0",
+		"nan": "^2.15.0"
 	}
 }
