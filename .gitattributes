@@ -1,0 +1,3 @@
+# Identify the release and plugin bundles as binary content so that Git won't bother showing massive diffs
+/.yarn/releases/** binary
+/.yarn/plugins/** binary
