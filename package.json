@@ -1,6 +1,7 @@
 {
 	"name": "javascript-regex",
 	"version": "2.0.5",
+	"packageManager": "yarn@3.1.1",
 	"description": "Syntax highlighting for JavaScript regular expressions",
 	"keywords": [
 		"javascript",
@@ -8,19 +9,19 @@
 		"regexp",
 		"syntax"
 	],
+	"repository": "https://github.com/wizard04wsu/javascript-regex",
+	"license": "MIT",
+	"main": "index.js",
 	"activationHooks": [
 		"source.js:root-scope-used",
 		"source.ts:root-scope-used",
 		"source.flow:root-scope-used"
 	],
-	"repository": "https://github.com/wizard04wsu/javascript-regex",
-	"license": "MIT",
 	"engines": {
 		"atom": ">=1.0.0 <2.0.0"
 	},
-	"main": "index.js",
 	"dependencies": {
-		"tree-sitter-regex-js": "^2.0.0",
-		"tree-sitter-regex-unicode-js": "^2.0.0"
+		"tree-sitter-regex-js": "^2.0.3",
+		"tree-sitter-regex-unicode-js": "^2.0.9"
 	}
 }
