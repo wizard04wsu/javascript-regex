@@ -14,7 +14,7 @@ const regexInjectionPoint = {
 			for(let i=0; i<=validFlags.length && i<flags.length; i++){
 				if(flags[i] === 'u'){
 					//unicode flag is set; use the "tree-sitter-regex-unicode-js" grammar
-					return 'regex-unicode-js';
+					return '_';
 				}
 				let f = validFlags.indexOf(flags[i]);
 				if(f < 0 || setFlags[f]) break;	//invalid flag or duplicate flag
@@ -22,7 +22,7 @@ const regexInjectionPoint = {
 			}
 		}
 		//unicode flag is not set; use the "tree-sitter-regex-js" grammar
-		return 'regex-js';
+		return 'regex_js';
 	},
 	
 	content(regexNode){
