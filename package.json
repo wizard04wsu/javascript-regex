@@ -1,6 +1,6 @@
 {
 	"name": "javascript-regex",
-	"version": "2.0.6",
+	"version": "2.0.7",
 	"packageManager": "yarn@3.1.1",
 	"description": "Syntax highlighting for JavaScript regular expressions",
 	"keywords": [
