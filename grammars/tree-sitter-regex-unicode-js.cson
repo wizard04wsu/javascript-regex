@@ -3,7 +3,7 @@ scopeName: 'source.js.regexp.unicode'
 type: 'tree-sitter'
 parser: 'tree-sitter-regex-unicode-js'
 
-injectionRegex: '^regex-unicode-js$'
+injectionRegex: '^_$'
 
 scopes:
   'regex': 'meta.pattern.regexp'
