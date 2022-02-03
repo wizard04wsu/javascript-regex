@@ -36,7 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",
           "packageDependencies": [
             ["tree-sitter-regex-js", "npm:2.0.3"],
-            ["tree-sitter-regex-unicode-js", "npm:2.0.9"]
+            ["tree-sitter-regex-unicode-js", "npm:2.0.11"]
           ],
           "linkType": "SOFT",
         }]
@@ -533,7 +533,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [
             ["javascript-regex", "workspace:."],
             ["tree-sitter-regex-js", "npm:2.0.3"],
-            ["tree-sitter-regex-unicode-js", "npm:2.0.9"]
+            ["tree-sitter-regex-unicode-js", "npm:2.0.11"]
           ],
           "linkType": "SOFT",
         }]
@@ -983,10 +983,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]
       ]],
       ["tree-sitter-regex-unicode-js", [
-        ["npm:2.0.9", {
-          "packageLocation": "./.yarn/unplugged/tree-sitter-regex-unicode-js-npm-2.0.9-077fb3f837/node_modules/tree-sitter-regex-unicode-js/",
+        ["npm:2.0.11", {
+          "packageLocation": "./.yarn/unplugged/tree-sitter-regex-unicode-js-npm-2.0.11-464f9da243/node_modules/tree-sitter-regex-unicode-js/",
           "packageDependencies": [
-            ["tree-sitter-regex-unicode-js", "npm:2.0.9"],
+            ["tree-sitter-regex-unicode-js", "npm:2.0.11"],
             ["nan", "npm:2.15.0"],
             ["node-gyp", "npm:8.4.1"]
           ],
