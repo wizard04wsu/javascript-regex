@@ -22,6 +22,6 @@
 	},
 	"dependencies": {
 		"tree-sitter-regex-js": "^2.0.3",
-		"tree-sitter-regex-unicode-js": "^2.0.9"
+		"tree-sitter-regex-unicode-js": "^2.0.11"
 	}
 }

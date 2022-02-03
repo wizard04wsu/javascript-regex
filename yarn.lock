@@ -413,8 +413,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "javascript-regex@workspace:."
   dependencies:
-    tree-sitter-regex-js: ^2.0.0
-    tree-sitter-regex-unicode-js: ^2.0.9
+    tree-sitter-regex-js: ^2.0.3
+    tree-sitter-regex-unicode-js: ^2.0.11
   languageName: unknown
   linkType: soft
 
@@ -802,7 +802,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tree-sitter-regex-js@npm:^2.0.0":
+"tree-sitter-regex-js@npm:^2.0.3":
   version: 2.0.3
   resolution: "tree-sitter-regex-js@npm:2.0.3"
   dependencies:
@@ -812,13 +812,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tree-sitter-regex-unicode-js@npm:^2.0.9":
-  version: 2.0.9
-  resolution: "tree-sitter-regex-unicode-js@npm:2.0.9"
+"tree-sitter-regex-unicode-js@npm:^2.0.11":
+  version: 2.0.11
+  resolution: "tree-sitter-regex-unicode-js@npm:2.0.11"
   dependencies:
     nan: ^2.15.0
     node-gyp: latest
-  checksum: 542c005c3a94974d40b6374e10de854119c9219512a56dd92652bf6cfb662c69dda65674326759d3b6d836945c2f2f61bbc1f8d34b5a5d15e205ef5404adbe4d
+  checksum: 61d94f32c5dedd307a97c3bad62259307d7f502e1941116476ebce9ca81283024432dc6120612b8b138d2e5f9b4f74f2bccc7295f3116b3eb71f2732d0629744
   languageName: node
   linkType: hard
 
