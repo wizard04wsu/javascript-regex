@@ -13,7 +13,7 @@ This package implements two tree-sitter parsers:
 ### Unable to install on Windows
 Instead of installing it from within Atom, try from the command line.
 
-	cd %USERPROFILE%\\.atom\\packages
+	cd %USERPROFILE%\.atom\packages
 	apm install javascript-regex
 
 ### Failure to load package grammars when I open Atom
