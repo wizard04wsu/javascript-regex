@@ -14,6 +14,7 @@ This package implements two tree-sitter parsers:
 Instead of installing it from within Atom, try from the command line.
 
 	cd %USERPROFILE%\.atom\packages
+	rmdir /S /Q javascript-regex
 	apm install javascript-regex
 
 ### Failure to load package grammars when I open Atom
