@@ -1,83 +1,76 @@
-const scopeNameList = ['source.js', 'source.ts', 'source.flow'];
-
-const regexInjectionPoint = {
+const injectionPoint_regex = {
+	//name of the target grammar scope in the outer language
 	type: 'regex',
 	
+	//get the name of the grammar that should be injected into a matching node
 	language(regexNode){
-		//console.log('language()');
-		
 		const {lastChild} = regexNode;
-		if(lastChild.type === 'regex_flags'){
-			let flags = lastChild.text,
-				validFlags = 'gimsy',
-				setFlags = [];
-			for(let i=0; i<=validFlags.length && i<flags.length; i++){
-				if(flags[i] === 'u'){
-					//unicode flag is set; use the "tree-sitter-regex-unicode-js" grammar
-					return '_';
+		if(lastChild.type === 'regex_flags'){	//flags are specified
+			const flags = lastChild.text;
+			let validFlags = 'gimsy'.split(''),
+				f = -1;
+			while(validFlags.length && ++f < flags.length){
+				const v = validFlags.indexOf(flags[f]);
+				if(flags[f] === 'u'){
+					return 'regex_u';	//unicode flag is set
 				}
-				let f = validFlags.indexOf(flags[i]);
-				if(f < 0 || setFlags[f]) break;	//invalid flag or duplicate flag
-				setFlags[f] = true;	//mark the flag as set
+				else if(v < 0){
+					break;	//invalid or duplicate flag
+				}
+				validFlags.splice(v, 1);
 			}
 		}
-		//unicode flag is not set; use the "tree-sitter-regex-js" grammar
-		return 'regex_js';
+		return 'regex';	//unicode flag is not set
 	},
 	
+	//get the node with the text content that should be parsed using the injected grammar
 	content(regexNode){
-		//console.log('content()');
-		
-		//return the pattern
+		//return the node containing the regex pattern between the slashes
 		return regexNode.children[1];
 	}
 };
 
-function setUpInjectionPointsForGrammar(grammar){
-	//console.log('setUpInjectionPointsForGrammar()');
+function createInjectionPointsInGrammar(scopeName){
+	const grammar = atom.grammars.treeSitterGrammarsById[scopeName];
+	if(!grammar) throw new Error(`Tree-sitter grammar for ${scopeName} was not found in the registry`);
 	
-	if(scopeNameList.includes(grammar.id)){
-		if(grammar.injectionPointsByType['regex_pattern']){
-			//delete injection point "regex_pattern"
-			delete grammar.injectionPointsByType['regex_pattern'];
+	//remove existing injection points
+	['regex', 'regex_pattern'].forEach(type => {
+		let injectionPoints = grammar.injectionPointsByType[type];
+		if(injectionPoints){
+			for(const ip of injectionPoints){
+				grammar.removeInjectionPoint(ip);
+			}
 		}
-		let injPnts;
-		if(!(injPnts = grammar.injectionPointsByType['regex']) || !injPnts.includes(regexInjectionPoint)){
-			//add injection point "regex"
-			grammar.addInjectionPoint(regexInjectionPoint);
-		}
-	}
-}
-
-function reloadPackageGrammars(packageName){
-	//console.log('reloadPackageGrammars()');
-	//this function is based on:
-	// https://github.com/MasseGuillaume/atom-live-grammar-reload/blob/89bb1305318ffd2b0a12e37ee70004d8d7eae81e/index.coffee
-	
-	//for each grammar loaded in Atom
-	for(grammar of atom.grammars.grammars){
-		//if the grammar is part of the package
-		if(grammar.packageName === packageName){
-			//remove the grammar
-			atom.grammars.removeGrammar(grammar);
-		}
-	}
-	//unload the package (by force)
-	delete atom.packages.loadedPackages[packageName];
-	//reload the package
-	const updatedPackage = atom.packages.loadPackage(packageName);
-	//reload its grammars
-	updatedPackage.loadGrammarsSync();
-	updatedPackage.grammars.forEach((grammar)=>{
-		atom.grammars.addGrammar(grammar);
 	});
+	
+	//add the one for this package
+	grammar.addInjectionPoint(injectionPoint_regex);
 }
 
-exports.activate = function () {
-	//console.log('activate()');
+exports.activate = function (){
+	const thisPackageName = 'javascript-regex';
 	
+	//replace existing grammars with the grammars in this package
+	const thisGrammars = atom.packages.loadedPackages[thisPackageName].grammars;
+	thisGrammars.forEach(grammar => {
+		const existingGrammar = atom.grammars.treeSitterGrammarsById[grammar.scopeName];
+		if(existingGrammar.packageName !== thisPackageName){
+			atom.grammars.removeGrammar(existingGrammar);
+			atom.grammars.addGrammar(grammar);
+		}
+	});
+	
+	//add injection points in these grammars
+	const scopeNameList = [
+		'source.js',
+		'source.jsx',
+		'source.ts',
+		'source.flow',
+	];
 	for(const scopeName of scopeNameList){
-		setUpInjectionPointsForGrammar(atom.grammars.treeSitterGrammarsById[scopeName]);
+		try{
+			createInjectionPointsInGrammar(scopeName);
+		}catch(e){}
 	}
-	reloadPackageGrammars('javascript-regex');
-}
+};
