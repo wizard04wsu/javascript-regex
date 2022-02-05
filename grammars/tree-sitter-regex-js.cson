@@ -1,93 +1,93 @@
-name: 'JavaScript RegExp'
+name: 'Regular Expressions (JavaScript)'
 scopeName: 'source.js.regexp'
 type: 'tree-sitter'
 parser: 'tree-sitter-regex-js'
 
-injectionRegex: '^regex-js$'
+injectionRegex: '^regex$'
 
 scopes:
-  'regex': 'meta.pattern.regexp'
+  'regex': 'meta.pattern.regex'
   
   'non_syntax': 'string.other.non-syntax'
   'invalid': 'invalid'
   
-  'disjunction_delimiter': 'keyword.operator.disjunction.regexp'
+  'disjunction_delimiter': 'keyword.operator.disjunction.regex'
   
   #####  quantifiers  #####
   
   #'count_quantifier, one_or_more, zero_or_more, optional': 'storage.modifier'
-  'zero_or_more, one_or_more, optional, count_quantifier': 'keyword.operator.quantifier.regexp'
-  'count_quantifier > count_quantifier_value': 'constant.numeric.regexp'
-  'count_quantifier > count_quantifier_delimiter': 'punctuation.definition.quantifier.count.delimiter.regexp'
+  'zero_or_more, one_or_more, optional, count_quantifier': 'keyword.operator.quantifier.regex'
+  'count_quantifier > count_quantifier_value': 'constant.numeric.regex'
+  'count_quantifier > count_quantifier_delimiter': 'punctuation.definition.quantifier.count.delimiter.regex'
   
   #####  lookaround assertions  #####
   
-  'lookahead_assertion': 'meta.group.assertion.look-ahead.regexp'
-  'lookahead_assertion > lookahead_identifier': 'entity.name.type.look-ahead.regexp'
-  'negative_lookahead_assertion': 'meta.group.assertion.negative-look-ahead.regexp'
-  'negative_lookahead_assertion > negative_lookahead_identifier': 'entity.name.type.negative-look-ahead.regexp'
-  'lookbehind_assertion': 'meta.group.assertion.look-behind.regexp'
-  'lookbehind_assertion > lookbehind_identifier': 'entity.name.type.look-behind.regexp'
-  'negative_lookbehind_assertion': 'meta.group.assertion.negative-look-behind.regexp'
-  'negative_lookbehind_assertion > negative_lookbehind_identifier': 'entity.name.type.negative-look-behind.regexp'
+  'lookahead_assertion': 'meta.group.assertion.look-ahead.regex'
+  'lookahead_assertion > lookahead_identifier': 'entity.name.type.look-ahead.regex'
+  'negative_lookahead_assertion': 'meta.group.assertion.negative-look-ahead.regex'
+  'negative_lookahead_assertion > negative_lookahead_identifier': 'entity.name.type.negative-look-ahead.regex'
+  'lookbehind_assertion': 'meta.group.assertion.look-behind.regex'
+  'lookbehind_assertion > lookbehind_identifier': 'entity.name.type.look-behind.regex'
+  'negative_lookbehind_assertion': 'meta.group.assertion.negative-look-behind.regex'
+  'negative_lookbehind_assertion > negative_lookbehind_identifier': 'entity.name.type.negative-look-behind.regex'
   
   #####  groups and backreferences  #####
   
-  'numeric_backreference': 'keyword.other.back-reference.numeric.regexp'
-  'numeric_backreference > group_name': 'entity.name.tag.regexp'
-  'named_backreference': 'keyword.other.back-reference.named.regexp'
-  'named_backreference > group_name': 'entity.name.tag.regexp'
+  'numeric_backreference': 'keyword.other.back-reference.numeric.regex'
+  'numeric_backreference > group_name': 'entity.name.tag.regex'
+  'named_backreference': 'keyword.other.back-reference.named.regex'
+  'named_backreference > group_name': 'entity.name.tag.regex'
   
-  'named_capturing_group': 'meta.group.capturing.named.regexp'
-  'named_capturing_group > named_capturing_group_identifier': 'entity.name.type.named.regexp'
-  'named_capturing_group > named_capturing_group_identifier > group_name': 'entity.name.tag.regexp'
-  'non_capturing_group': 'meta.group.non-capturing.regexp'
-  'non_capturing_group > non_capturing_group_identifier': 'entity.name.type.non-capturing.regexp'
-  'anonymous_capturing_group': 'meta.group.capturing.anonymous.regexp'
+  'named_capturing_group': 'meta.group.capturing.named.regex'
+  'named_capturing_group > named_capturing_group_identifier': 'entity.name.type.named.regex'
+  'named_capturing_group > named_capturing_group_identifier > group_name': 'entity.name.tag.regex'
+  'non_capturing_group': 'meta.group.non-capturing.regex'
+  'non_capturing_group > non_capturing_group_identifier': 'entity.name.type.non-capturing.regex'
+  'anonymous_capturing_group': 'meta.group.capturing.anonymous.regex'
   
   #'group_name': 'variable.other.object.property'
   
   #'"(", "(?", "(?:", "(?<"': 'punctuation.definition.parameters.begin.bracket.round'
-  'group_begin': 'punctuation.definition.group.begin.bracket.round.regexp'
+  'group_begin': 'punctuation.definition.group.begin.bracket.round.regex'
   #'">", ")"': 'punctuation.definition.parameters.end.bracket.round'
-  'group_end': 'punctuation.definition.group.end.bracket.round.regexp'
+  'group_end': 'punctuation.definition.group.end.bracket.round.regex'
   
   #####  character sets  #####
   
-  'character_class': 'constant.other.character-class.set.regexp'
-  'character_class > set_begin': 'punctuation.definition.character-class.set.begin.regexp'
-  'character_class > set_end': 'punctuation.definition.character-class.set.end.regexp'
-  'character_class > set_negation': 'keyword.operator.negation.regexp'
-  'character_class > character_range': 'constant.other.character-class.range.regexp'
-  'character_class > character_range > range_delimiter': 'punctuation.definition.character-class.range.hyphen.regexp'
+  'character_class': 'constant.other.character-class.set.regex'
+  'character_class > set_begin': 'punctuation.definition.character-class.set.begin.regex'
+  'character_class > set_end': 'punctuation.definition.character-class.set.end.regex'
+  'character_class > set_negation': 'keyword.operator.negation.regex'
+  'character_class > character_range': 'constant.other.character-class.range.regex'
+  'character_class > character_range > range_delimiter': 'punctuation.definition.character-class.range.hyphen.regex'
   
   #####  character classes  #####
   
-  'character_class_escape': 'constant.other.character-class.escape.regexp'
-  'any_character': 'constant.other.character-class.any.regexp'
+  'character_class_escape': 'constant.other.character-class.escape.regex'
+  'any_character': 'constant.other.character-class.any.regex'
   
   #####  character escapes  #####
   
-  'null_character': 'constant.character.numeric.null.regexp'
-  'identity_escape': 'constant.character.escape.backslash.regexp'
-  'identity_escape > escape_operator': 'keyword.operator.escape-character.regexp'
-  'unicode_escape': 'constant.character.numeric.unicode.regexp'
-  'unicode_escape > unicode_code': 'constant.character.numeric.unicode.character-code.regexp'
-  'octal_escape': 'constant.character.numeric.octal.regexp'
-  'octal_escape > octal_code': 'constant.character.numeric.octal.character-code.regexp'
-  'hexadecimal_escape': 'constant.character.numeric.hexadecimal.regexp'
-  'hexadecimal_escape > hexadecimal_code': 'constant.character.numeric.hexadecimal.character-code.regexp'
-  'control_letter_escape': 'constant.character.control.regexp'
-  'control_letter_escape > control_letter_code': 'constant.character.control.character-code.regexp'
-  'special_escape': 'constant.character.escape.special.regexp'
+  'null_character': 'constant.character.numeric.null.regex'
+  'identity_escape': 'constant.character.escape.backslash.regex'
+  'identity_escape > escape_operator': 'keyword.operator.escape-character.regex'
+  'unicode_escape': 'constant.character.numeric.unicode.regex'
+  'unicode_escape > unicode_code': 'constant.character.numeric.unicode.character-code.regex'
+  'octal_escape': 'constant.character.numeric.octal.regex'
+  'octal_escape > octal_code': 'constant.character.numeric.octal.character-code.regex'
+  'hexadecimal_escape': 'constant.character.numeric.hexadecimal.regex'
+  'hexadecimal_escape > hexadecimal_code': 'constant.character.numeric.hexadecimal.character-code.regex'
+  'control_letter_escape': 'constant.character.control.regex'
+  'control_letter_escape > control_letter_code': 'constant.character.control.character-code.regex'
+  'special_escape': 'constant.character.escape.special.regex'
   
-  'invalid_unicode_escape': 'constant.character.escape.backslash.invalid.regexp'
-  'invalid_unicode_escape > escape_operator': 'keyword.operator.escape-character.regexp'
-  'invalid_hexadecimal_escape': 'constant.character.escape.backslash.invalid.regexp'
-  'invalid_hexadecimal_escape > escape_operator': 'keyword.operator.escape-character.regexp'
-  'invalid_control_letter_escape': 'constant.other.invalid.regexp'
+  'invalid_unicode_escape': 'constant.character.escape.backslash.invalid.regex'
+  'invalid_unicode_escape > escape_operator': 'keyword.operator.escape-character.regex'
+  'invalid_hexadecimal_escape': 'constant.character.escape.backslash.invalid.regex'
+  'invalid_hexadecimal_escape > escape_operator': 'keyword.operator.escape-character.regex'
+  'invalid_control_letter_escape': 'constant.other.invalid.regex'
   
   #####  boundary assertions  #####
   
-  #'start_assertion, end_assertion, boundary_assertion, non_boundary_assertion': 'constant.character.character-class.regexp'
-  'start_assertion, end_assertion, boundary_assertion, non_boundary_assertion': 'keyword.control.anchor.regexp'
+  #'start_assertion, end_assertion, boundary_assertion, non_boundary_assertion': 'constant.character.character-class.regex'
+  'start_assertion, end_assertion, boundary_assertion, non_boundary_assertion': 'keyword.control.anchor.regex'

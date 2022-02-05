@@ -1,7 +1,6 @@
 {
 	"name": "javascript-regex",
-	"version": "2.0.6",
-	"packageManager": "yarn@3.1.1",
+	"version": "2.0.11",
 	"description": "Syntax highlighting for JavaScript regular expressions",
 	"keywords": [
 		"javascript",
@@ -21,7 +20,7 @@
 		"atom": ">=1.0.0 <2.0.0"
 	},
 	"dependencies": {
-		"tree-sitter-regex-js": "^2.0.3",
-		"tree-sitter-regex-unicode-js": "^2.0.11"
+		"tree-sitter-regex-js": "^2.0.6",
+		"tree-sitter-regex-unicode-js": "^2.0.14"
 	}
 }
