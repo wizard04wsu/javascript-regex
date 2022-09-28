@@ -12,7 +12,6 @@
 	"license": "MIT",
 	"main": "lib/javascript-regex.js",
 	"styleSheets": [
-		"javascript-regex"
 	],
 	"activationHooks": [
 		"source.js:root-scope-used",
