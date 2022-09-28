@@ -1,6 +1,6 @@
 {
 	"name": "javascript-regex",
-	"version": "2.0.13",
+	"version": "2.1.0",
 	"description": "Syntax highlighting for JavaScript regular expressions",
 	"keywords": [
 		"javascript",
@@ -10,9 +10,12 @@
 	],
 	"repository": "https://github.com/wizard04wsu/javascript-regex",
 	"license": "MIT",
-	"main": "index.js",
+	"main": "lib/javascript-regex.js",
+	"styleSheets": [
+	],
 	"activationHooks": [
 		"source.js:root-scope-used",
+		"source.jsx:root-scope-used",
 		"source.ts:root-scope-used",
 		"source.flow:root-scope-used"
 	],

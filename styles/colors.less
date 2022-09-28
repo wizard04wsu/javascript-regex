@@ -1,0 +1,35 @@
+// Colors used outside of a character set
+@content: #7da672;
+@delimiter: #00ff00;
+@flag: #7afd7a;
+@anchor: #ffffff;
+@group-delimiter: saturate(#e8e888, 30%, relative);
+@group-delimiter-capturing: @backreference;
+@group-identifier: desaturate(darken(@group-delimiter, 35%, relative), 70%, relative);
+@group-identifier-capturing: desaturate(darken(@group-delimiter-capturing, 35%, relative), 70%, relative);
+@group-tag: saturate(lighten(@group-identifier, 25%, relative), 50%, relative);
+@group-tag-capturing: saturate(lighten(@group-identifier-capturing, 25%, relative), 50%, relative);
+//@group-bg: fade(#e8e888, 1.5%);
+@group-bg: transparent;
+@backreference: #ffa15d;
+@backreference-tag: desaturate(darken(@backreference, 25%, relative), 55%, relative);
+@quantifier: #e2608b;
+@quantifier-tag: desaturate(darken(@quantifier, 25%, relative), 40%, relative);
+@character-special: @character-numeric;
+@character-class: #bb8ad2;
+@character-class-property: desaturate(darken(@character-class, 30%, relative), 40%, relative);
+@character-numeric: #4696e2;
+@character-numeric-charcode: desaturate(darken(@character-numeric, 25%, relative), 25%, relative);
+@invalid: #ff0000;
+
+// Colors used inside of a character set
+@charset: #56b6c2;
+@charset-bg: fade(#56b6c2, 6%);
+@charset-delimiter: #88eeee;
+@charset-character-special: mix(@character-numeric, @charset, 60%);
+@charset-character-class: mix(@character-class, @charset, 60%);
+@charset-character-class-property: mix(@character-class-property, @charset, 75%);
+@charset-character-numeric: @character-numeric;
+@charset-character-numeric-charcode: @character-numeric-charcode;
+@charset-range-dash: @charset-delimiter;
+@charset-range-bg: fade(#88eeee, 6%);

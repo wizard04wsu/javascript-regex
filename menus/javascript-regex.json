@@ -1,0 +1,22 @@
+{
+	"menu": [
+		{
+			"label": "Packages",
+			"submenu": [
+				{
+					"label": "JavaScript RegExp",
+					"submenu": [
+						{
+							"label": "Toggle Group Outlines",
+							"command": "javascript-regex:toggle-group-outlines"
+						},
+						{
+							"label": "Toggle Character Set Backgrounds",
+							"command": "javascript-regex:toggle-character-set-backgrounds"
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,240 @@
+@import "colors.less";
+
+.syntax--source.syntax--js .syntax--string.syntax--regexp {
+	//the flags
+	color: @flag;
+	
+	//the delimiters '/'
+	> .syntax--keyword.syntax--operator {
+		color: @delimiter;
+	}
+	
+	//the pattern
+	.syntax--meta.syntax--pattern {
+		
+		//invalid content (that isn't already classed as such)
+		color: @invalid;
+		
+		//invalid content (that's been classed by the grammar)
+		.syntax--invalid,
+		.syntax--invalid * {
+			color: @invalid !important;
+		}
+		
+		//non-syntax characters
+		.syntax--string.syntax--other.syntax--non-syntax {
+			color: @content;
+		}
+		
+		//disjuction delimiters '|'
+		.syntax--keyword.syntax--operator.syntax--disjunction {
+			color: @group-delimiter;
+		}
+		
+		//boundary assertions
+		.syntax--keyword.syntax--control.syntax--anchor {
+			color: @anchor;
+		}
+		
+		//character escapes
+		.syntax--constant.syntax--character {
+			
+			//identity escape
+			&.syntax--escape {
+				color: @content;
+				
+				//the escape's backslash '\'
+				.syntax--keyword.syntax--operator.syntax--escape-character {
+					color: inherit;
+					opacity: 0.4;
+				}
+			}
+			
+			//numeric and control escapes
+			&.syntax--numeric,
+			&.syntax--control {
+				color: @character-numeric;
+				
+				//the escape's character code
+				&.syntax--character-code {
+					color: @character-numeric-charcode;
+				}
+			}
+			
+			//special escapes
+			&.syntax--special {
+				color: @character-special;
+			}
+		}
+		
+		//character classes
+		.syntax--constant.syntax--other.syntax--character-class {
+			color: 	@character-class;
+			
+			//unicode property classes
+			.syntax--unicode-property {
+				&.syntax--name,
+				&.syntax--value {
+					color: 	@character-class-property;
+				}
+				&.syntax--operator {
+					color: inherit;
+				}
+			}
+		}
+		
+		//character sets
+		.syntax--constant.syntax--other.syntax--character-class.syntax--set {
+			
+			//delimiters and negation operator '[' ']' '^'
+			.syntax--punctuation.syntax--definition,
+			.syntax--keyword.syntax--operator.syntax--negation {
+				color: @charset-delimiter;
+			}
+			
+			//inside the set -> non-syntax characters
+			.syntax--string.syntax--other.syntax--non-syntax {
+				color: @charset;
+			}
+			
+			//inside the set -> character escapes
+			.syntax--constant.syntax--character {
+				color: @charset;
+				
+				//identity escape
+				&.syntax-escape {
+					color: inherit;
+					
+					//the escape's backslash '\'
+					.syntax--keyword.syntax--operator.syntax--escape-character {
+						color:inherit;
+					}
+				}
+				
+				//numeric and control escapes
+				&.syntax--numeric,
+				&.syntax--control {
+					color: @charset-character-numeric;
+					
+					//the escape's character code
+					&.syntax--character-code {
+						color: @charset-character-numeric-charcode;
+					}
+				}
+				
+				//special escapes
+				&.syntax--special {
+					color: @charset-character-special;
+				}
+			}
+			
+			//inside the set -> character classes
+			.syntax--constant.syntax--other.syntax--character-class {
+				color: @charset;
+				
+				&.syntax--escape,
+				&.syntax--any {
+					color: @charset-character-class;
+					
+					//unicode property classes
+					.syntax--unicode-property {
+						&.syntax--name,
+						&.syntax--value {
+							color: @charset-character-class-property;
+						}
+						&.syntax--operator {
+							color: inherit;
+						}
+					}
+				}
+			}
+			
+			//inside the set -> character ranges
+			.syntax--constant.syntax--other.syntax--character-class.syntax--range {
+				border-radius: 0.5em;
+				padding: 0 0.1em 0.1em;
+				margin: 0 -0.05em;
+				
+				//dash
+				.syntax--punctuation.syntax--definition.syntax--range {
+					color: @charset-range-dash;
+				}
+			}
+		}
+		
+		//groups (including lookaround assertions)
+		.syntax--meta.syntax--group {
+			background-color: @group-bg;
+			
+			//delimiters '(' and ')'
+			&.syntax--non-capturing > .syntax--punctuation.syntax--definition.syntax--group,
+			&.syntax--non-capturing > .syntax--punctuation.syntax--definition.syntax--group > .syntax--punctuation.syntax--definition.syntax--group,
+			&.syntax--assertion > .syntax--punctuation.syntax--definition.syntax--group,
+			&.syntax--assertion > .syntax--punctuation.syntax--definition.syntax--group > .syntax--punctuation.syntax--definition.syntax--group {
+				color: @group-delimiter;
+			}
+			&.syntax--capturing > .syntax--punctuation.syntax--definition.syntax--group,
+			&.syntax--capturing > .syntax--punctuation.syntax--definition.syntax--group > .syntax--punctuation.syntax--definition.syntax--group {
+				color: @group-delimiter-capturing;
+			}
+			
+			//group type identifiers
+			&.syntax--non-capturing > .syntax--entity.syntax--name.syntax--type,
+			&.syntax--non-capturing > .syntax--entity.syntax--name.syntax--type > .syntax--entity.syntax--name.syntax--type,
+			&.syntax--assertion > .syntax--entity.syntax--name.syntax--type,
+			&.syntax--assertion > .syntax--entity.syntax--name.syntax--type > .syntax--entity.syntax--name.syntax--type {
+				color: @group-identifier;
+				
+				//group names
+				.syntax--entity.syntax--name.syntax--tag {
+					color: @group-tag;
+					font-style: italic;
+					
+					//character escapes
+					.syntax--constant.syntax--character.syntax--numeric,
+					.syntax--constant.syntax--character.syntax--control {
+						color: inherit;	//make escapes the same color
+					}
+				}
+			}
+			&.syntax--capturing > .syntax--entity.syntax--name.syntax--type,
+			&.syntax--capturing > .syntax--entity.syntax--name.syntax--type > .syntax--entity.syntax--name.syntax--type {
+				color: @group-identifier-capturing;
+				
+				//group names
+				.syntax--entity.syntax--name.syntax--tag {
+					color: @group-tag-capturing;
+					font-style: italic;
+				}
+			}
+		}
+		
+		//backreferences
+		.syntax--keyword.syntax--other.syntax--back-reference {
+			color: @backreference;
+			
+			//group names
+			.syntax--entity.syntax--name.syntax--tag {
+				color: @backreference-tag;
+				font-style: italic;
+				
+				//character escapes
+				.syntax--constant.syntax--character.syntax--numeric,
+				.syntax--constant.syntax--character.syntax--control {
+					color: inherit;	//make escapes the same color
+				}
+			}
+		}
+		
+		//quantifiers
+		.syntax--keyword.syntax--operator.syntax--quantifier {
+			color: @quantifier;
+			
+			//contents of count quantifiers
+			.syntax--constant.syntax--numeric,
+			.syntax--count.syntax--delimiter {
+				color: @quantifier-tag;
+			}
+		}
+	}
+}
