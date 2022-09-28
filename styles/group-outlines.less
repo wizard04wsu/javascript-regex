@@ -1,0 +1,100 @@
+@import "colors.less";
+
+@group-outline-radius: ~"calc(var(--editor-line-height) / 2)";
+@group-outline-radius: ~"calc(var(--editor-line-height) * 1em / 2)";
+
+
+.syntax--source.syntax--js .syntax--string.syntax--regexp {
+	
+	//the pattern
+	.syntax--meta.syntax--pattern {
+		
+		//groups (including lookaround assertions)
+		.syntax--meta.syntax--group {
+			background-color: @group-bg;
+			border-radius: @group-outline-radius;
+			padding: 1px 0;
+			position: relative;
+			
+			/*&:first-child {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
+			&:last-child {
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
+			}*/
+			
+			//lines above and below group content
+			&.syntax--non-capturing,
+			&.syntax--assertion {
+				box-shadow:
+					0 -6px 0 -5px @group-delimiter,
+					0 6px 0 -5px @group-delimiter;
+			}
+			&.syntax--capturing {
+				box-shadow:
+					0 -6px 0 -5px @group-delimiter-capturing,
+					0 6px 0 -5px @group-delimiter-capturing;
+			}
+			
+			//delimiters '(' and ')'
+			> .syntax--punctuation.syntax--definition.syntax--group,
+			> .syntax--punctuation.syntax--definition.syntax--group > .syntax--punctuation.syntax--definition.syntax--group {
+				
+				&.syntax--begin,
+				&.syntax--end {
+					display: inline-block;
+				}
+				
+				&.syntax--begin::before,
+				&.syntax--end::after {
+					content: "";
+					position: absolute;
+					width: ~"calc(2 * @{group-outline-radius})";
+					border-radius: @group-outline-radius;
+				}
+				
+				&.syntax--begin::before {
+					inset: 0 auto 0 3px;
+				}
+				
+				&.syntax--end::after {
+					inset: 0 3px 0 auto;
+				}
+			}
+			&.syntax--non-capturing > .syntax--punctuation.syntax--definition.syntax--group,
+			&.syntax--non-capturing > .syntax--punctuation.syntax--definition.syntax--group > .syntax--punctuation.syntax--definition.syntax--group,
+			&.syntax--assertion > .syntax--punctuation.syntax--definition.syntax--group,
+			&.syntax--assertion > .syntax--punctuation.syntax--definition.syntax--group > .syntax--punctuation.syntax--definition.syntax--group {
+				
+				&.syntax--begin::before {
+					box-shadow:
+						-2px -2px 0 -1px @group-delimiter,
+						-2px 2px 0 -1px @group-delimiter;
+				}
+				
+				&.syntax--end::after {
+					box-shadow:
+						2px -2px 0 -1px @group-delimiter,
+						2px 2px 0 -1px @group-delimiter;
+				}
+			}
+			&.syntax--capturing > .syntax--punctuation.syntax--definition.syntax--group,
+			&.syntax--capturing > .syntax--punctuation.syntax--definition.syntax--group > .syntax--punctuation.syntax--definition.syntax--group {
+				
+				&.syntax--begin::before {
+					box-shadow:
+						-2px -2px 0 -1px @group-delimiter-capturing,
+						-2px 2px 0 -1px @group-delimiter-capturing;
+				}
+				
+				&.syntax--end::after {
+					box-shadow:
+						2px -2px 0 -1px @group-delimiter-capturing,
+						2px 2px 0 -1px @group-delimiter-capturing;
+				}
+			}
+		}
+	}
+}

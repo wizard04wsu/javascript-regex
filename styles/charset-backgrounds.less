@@ -1,0 +1,18 @@
+@import "colors.less";
+
+.syntax--source.syntax--js .syntax--string.syntax--regexp {
+	
+	//the pattern
+	.syntax--meta.syntax--pattern {
+		
+		//character sets
+		.syntax--constant.syntax--other.syntax--character-class.syntax--set {
+			background-color: @charset-bg;
+			
+			//inside the set -> character ranges
+			.syntax--constant.syntax--other.syntax--character-class.syntax--range {
+				background-color: @charset-range-bg;
+			}
+		}
+	}
+}

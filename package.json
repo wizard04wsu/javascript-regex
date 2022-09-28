@@ -10,9 +10,13 @@
 	],
 	"repository": "https://github.com/wizard04wsu/javascript-regex",
 	"license": "MIT",
-	"main": "index.js",
+	"main": "lib/javascript-regex.js",
+	"styleSheets": [
+		"javascript-regex"
+	],
 	"activationHooks": [
 		"source.js:root-scope-used",
+		"source.jsx:root-scope-used",
 		"source.ts:root-scope-used",
 		"source.flow:root-scope-used"
 	],
