@@ -1,14 +1,7 @@
 @import "colors.less";
 
-@half-line-height-unit: ~"calc(var(--editor-line-height) / 2)";
-@half-line-height-nounit: ~"calc(var(--editor-line-height) * 1em / 2)";
-//@line-padding-unit: ~"calc(var(--editor-line-height) - 1em)";
-//@line-padding-nounit: ~"calc(var(--editor-line-height) * 1em - 1em)";
-@half-line-padding-unit: ~"calc((var(--editor-line-height) - 1em) / 2)";
-@half-line-padding-nounit: ~"calc((var(--editor-line-height) * 1em - 1em) / 2)";
-@indent-width-unit: ~"calc(0.5em + (var(--editor-line-height) - 1em) / 4)";
-@indent-width-nounit: ~"calc(0.5em + (var(--editor-line-height) * 1em - 1em) / 4)";
-
+@half-line-height: ~"calc(var(--editor-line-height) * 1em / 2)";
+@half-line-padding: ~"calc((var(--editor-line-height) * 1em - 1em) / 2)";
 
 
 .syntax--source.syntax--js .syntax--string.syntax--regexp > .syntax--meta.syntax--pattern {
@@ -24,8 +17,6 @@
 		background-color: @group-bg;
 		padding: 1px 0;
 		position: relative;
-		//border-radius: @half-line-height-unit;
-		//border-radius: @half-line-height-nounit;
 		
 		//lines above and below group content
 		&::before {
@@ -34,8 +25,7 @@
 			display: block;
 			border: 1px solid @group-delimiter;
 			border-width: 1px 0;
-			inset: -1px @half-line-height-unit;
-			inset: -1px @half-line-height-nounit;
+			inset: -1px @half-line-height;
 		}
 		&.syntax--capturing::before {
 			border-color: @group-delimiter-capturing;
@@ -60,13 +50,11 @@
 			&.syntax--end::after {
 				content: "";
 				position: absolute;
-				width: @half-line-height-unit;
-				width: @half-line-height-nounit;
+				width: @half-line-height;
 			}
 			
 			&.syntax--begin::before {
-				inset: 1px auto 2px @half-line-padding-unit;
-				inset: 1px auto 2px @half-line-padding-nounit;
+				inset: 1px auto 2px @half-line-padding;
 				border-top-left-radius: 100% 50%;
 				border-bottom-left-radius: 100% 50%;
 				box-shadow:
@@ -76,8 +64,7 @@
 			}
 			
 			&.syntax--end::after {
-				inset: 1px @half-line-padding-unit 2px auto;
-				inset: 1px @half-line-padding-nounit 2px auto;
+				inset: 1px @half-line-padding 2px auto;
 				border-top-right-radius: 100% 50%;
 				border-bottom-right-radius: 100% 50%;
 				box-shadow:
@@ -106,45 +93,36 @@
 	}
 }
 
-.line > :first-child > .syntax--source.syntax--js:first-child > .syntax--string.syntax--regexp:first-child > .syntax--meta.syntax--pattern:first-child {
+//adjustments for breaks in a wrapped line
+.line .syntax--source.syntax--js .syntax--string.syntax--regexp > .syntax--meta.syntax--pattern {
 	
-	> .syntax--meta.syntax--pattern:first-child > .syntax--meta.syntax--group:first-child,
-	.syntax--meta.syntax--group:first-child {
+	> .syntax--meta.syntax--group:first-child,
+	:not(.syntax--invalid) > .syntax--meta.syntax--group:first-child {
 		
 		&::before {
-			left: @indent-width-unit;
-			left: @indent-width-nounit;
+			left: 0;
 		}
 	}
-	:not(:first-child) .syntax--meta.syntax--group:first-child {
+	:not(.syntax--invalid):not(:first-child) .syntax--meta.syntax--group:first-child {
 		
 		&::before {
-			left: @half-line-height-unit;
-			left: @half-line-height-nounit;
+			left: @half-line-height;
 		}
 	}
 }
-/*.line > :first-child > .syntax--source.syntax--js:first-child > .syntax--string.syntax--regexp:first-child {
-	.syntax--meta.syntax--group:first-child {
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
+.line .syntax--source.syntax--js .syntax--string.syntax--regexp > .syntax--meta.syntax--pattern {
+	
+	> .syntax--meta.syntax--group:last-child,
+	:not(.syntax--invalid) > .syntax--meta.syntax--group:last-child {
+		
+		&::before {
+			right: 0;
+		}
 	}
-	:not(:first-child) .syntax--meta.syntax--group:first-child {
-		border-top-right-radius: @line-padding-unit 50%;
-		border-top-right-radius: @line-padding-nounit 50%;
-		border-bottom-right-radius: @line-padding-unit 50%;
-		border-bottom-right-radius: @line-padding-nounit 50%;
+	:not(.syntax--invalid):not(:last-child) .syntax--meta.syntax--group:last-child {
+		
+		&::before {
+			right: @half-line-height;
+		}
 	}
 }
-.line > :last-child > .syntax--source.syntax--js:last-child > .syntax--string.syntax--regexp:last-child {
-	.syntax--meta.syntax--group:last-child {
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
-	}
-	:not(:last-child) .syntax--meta.syntax--group:last-child {
-		border-top-left-radius: @line-padding-unit 50%;
-		border-top-left-radius: @line-padding-nounit 50%;
-		border-bottom-left-radius: @line-padding-unit 50%;
-		border-bottom-left-radius: @line-padding-nounit 50%;
-	}
-}*/

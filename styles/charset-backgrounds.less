@@ -1,17 +1,23 @@
 @import "colors.less";
+//@editor-background-color: #282c34;	//TODO: use JavaScript to update this with editor's current background color, and watch for changes
 
-.syntax--source.syntax--js .syntax--string.syntax--regexp {
+
+.syntax--source.syntax--js .syntax--string.syntax--regexp > .syntax--meta.syntax--pattern {
 	
-	//the pattern
-	.syntax--meta.syntax--pattern {
+	//character sets
+	.syntax--constant.syntax--other.syntax--character-class.syntax--set {
+		background-color: @charset-bg;
 		
-		//character sets
 		.syntax--constant.syntax--other.syntax--character-class.syntax--set {
-			background-color: @charset-bg;
+			background-color: transparent;
+		}
+		
+		//inside the set -> character ranges
+		.syntax--constant.syntax--other.syntax--character-class.syntax--range {
+			background-color: @charset-range-bg;
 			
-			//inside the set -> character ranges
 			.syntax--constant.syntax--other.syntax--character-class.syntax--range {
-				background-color: @charset-range-bg;
+				background-color: transparent;
 			}
 		}
 	}

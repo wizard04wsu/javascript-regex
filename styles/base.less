@@ -10,7 +10,7 @@
 	}
 	
 	//the pattern
-	.syntax--meta.syntax--pattern {
+	> .syntax--meta.syntax--pattern {
 		
 		//invalid content (that isn't already classed as such)
 		color: @invalid;
@@ -236,5 +236,10 @@
 				color: @quantifier-tag;
 			}
 		}
+	}
+	
+	//remove Atom editor's indent guides so that wrapped lines are flush with the left side of the editor
+	.indent-guide {
+		display: none;
 	}
 }
