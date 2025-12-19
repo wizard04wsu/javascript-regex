@@ -1,0 +1,258 @@
+[
+  {
+    "selector": "regex",
+    "scope": "meta.pattern.regex"
+  },
+  {
+    "selector": "non_syntax",
+    "scope": "string.other.non-syntax"
+  },
+  {
+    "selector": "invalid",
+    "scope": "invalid"
+  },
+  {
+    "selector": "disjunction_delimiter",
+    "scope": "keyword.operator.disjunction.regex"
+  },
+  {
+    "selector": "zero_or_more",
+    "scope": "keyword.operator.quantifier.regex"
+  },
+  {
+    "selector": "one_or_more",
+    "scope": "keyword.operator.quantifier.regex"
+  },
+  {
+    "selector": "optional",
+    "scope": "keyword.operator.quantifier.regex"
+  },
+  {
+    "selector": "count_quantifier",
+    "scope": "keyword.operator.quantifier.regex"
+  },
+  {
+    "selector": "count_quantifier > count_quantifier_value",
+    "scope": "constant.numeric.regex"
+  },
+  {
+    "selector": "count_quantifier > count_quantifier_delimiter",
+    "scope": "punctuation.definition.quantifier.count.delimiter.regex"
+  },
+  {
+    "selector": "lookahead_assertion",
+    "scope": "meta.group.assertion.look-ahead.regex"
+  },
+  {
+    "selector": "lookahead_assertion > lookahead_identifier",
+    "scope": "entity.name.type.look-ahead.regex"
+  },
+  {
+    "selector": "negative_lookahead_assertion",
+    "scope": "meta.group.assertion.negative-look-ahead.regex"
+  },
+  {
+    "selector": "negative_lookahead_assertion > negative_lookahead_identifier",
+    "scope": "entity.name.type.negative-look-ahead.regex"
+  },
+  {
+    "selector": "lookbehind_assertion",
+    "scope": "meta.group.assertion.look-behind.regex"
+  },
+  {
+    "selector": "lookbehind_assertion > lookbehind_identifier",
+    "scope": "entity.name.type.look-behind.regex"
+  },
+  {
+    "selector": "negative_lookbehind_assertion",
+    "scope": "meta.group.assertion.negative-look-behind.regex"
+  },
+  {
+    "selector": "negative_lookbehind_assertion > negative_lookbehind_identifier",
+    "scope": "entity.name.type.negative-look-behind.regex"
+  },
+  {
+    "selector": "numeric_backreference",
+    "scope": "keyword.other.back-reference.numeric.regex"
+  },
+  {
+    "selector": "numeric_backreference > group_name",
+    "scope": "entity.name.tag.regex"
+  },
+  {
+    "selector": "named_backreference",
+    "scope": "keyword.other.back-reference.named.regex"
+  },
+  {
+    "selector": "named_backreference > group_name",
+    "scope": "entity.name.tag.regex"
+  },
+  {
+    "selector": "named_capturing_group",
+    "scope": "meta.group.capturing.named.regex"
+  },
+  {
+    "selector": "named_capturing_group > named_capturing_group_identifier",
+    "scope": "entity.name.type.named.regex"
+  },
+  {
+    "selector": "named_capturing_group > named_capturing_group_identifier > group_name",
+    "scope": "entity.name.tag.regex"
+  },
+  {
+    "selector": "non_capturing_group",
+    "scope": "meta.group.non-capturing.regex"
+  },
+  {
+    "selector": "non_capturing_group > non_capturing_group_identifier",
+    "scope": "entity.name.type.non-capturing.regex"
+  },
+  {
+    "selector": "anonymous_capturing_group",
+    "scope": "meta.group.capturing.anonymous.regex"
+  },
+  {
+    "selector": "group_begin",
+    "scope": "punctuation.definition.group.begin.bracket.round.regex"
+  },
+  {
+    "selector": "group_end",
+    "scope": "punctuation.definition.group.end.bracket.round.regex"
+  },
+  {
+    "selector": "character_class",
+    "scope": "constant.other.character-class.set.regex"
+  },
+  {
+    "selector": "character_class > set_begin",
+    "scope": "punctuation.definition.character-class.set.begin.regex"
+  },
+  {
+    "selector": "character_class > set_end",
+    "scope": "punctuation.definition.character-class.set.end.regex"
+  },
+  {
+    "selector": "character_class > set_negation",
+    "scope": "keyword.operator.negation.regex"
+  },
+  {
+    "selector": "character_class > character_range",
+    "scope": "constant.other.character-class.range.regex"
+  },
+  {
+    "selector": "character_class > character_range > range_delimiter",
+    "scope": "punctuation.definition.character-class.range.hyphen.regex"
+  },
+  {
+    "selector": "character_class_escape",
+    "scope": "constant.other.character-class.escape.regex"
+  },
+  {
+    "selector": "any_character",
+    "scope": "constant.other.character-class.any.regex"
+  },
+  {
+    "selector": "null_character",
+    "scope": "constant.character.numeric.null.regex"
+  },
+  {
+    "selector": "identity_escape",
+    "scope": "constant.character.escape.backslash.regex"
+  },
+  {
+    "selector": "identity_escape > escape_operator",
+    "scope": "keyword.operator.escape-character.regex"
+  },
+  {
+    "selector": "unicode_escape",
+    "scope": "constant.character.numeric.unicode.regex"
+  },
+  {
+    "selector": "unicode_escape > unicode_code",
+    "scope": "constant.character.numeric.unicode.character-code.regex"
+  },
+  {
+    "selector": "octal_escape",
+    "scope": "constant.character.numeric.octal.regex"
+  },
+  {
+    "selector": "octal_escape > octal_code",
+    "scope": "constant.character.numeric.octal.character-code.regex"
+  },
+  {
+    "selector": "hexadecimal_escape",
+    "scope": "constant.character.numeric.hexadecimal.regex"
+  },
+  {
+    "selector": "hexadecimal_escape > hexadecimal_code",
+    "scope": "constant.character.numeric.hexadecimal.character-code.regex"
+  },
+  {
+    "selector": "control_letter_escape",
+    "scope": "constant.character.control.regex"
+  },
+  {
+    "selector": "control_letter_escape > control_letter_code",
+    "scope": "constant.character.control.character-code.regex"
+  },
+  {
+    "selector": "special_escape",
+    "scope": "constant.character.escape.special.regex"
+  },
+  {
+    "selector": "invalid_unicode_escape",
+    "scope": "constant.character.escape.backslash.invalid.regex"
+  },
+  {
+    "selector": "invalid_unicode_escape > escape_operator",
+    "scope": "keyword.operator.escape-character.regex"
+  },
+  {
+    "selector": "invalid_hexadecimal_escape",
+    "scope": "constant.character.escape.backslash.invalid.regex"
+  },
+  {
+    "selector": "invalid_hexadecimal_escape > escape_operator",
+    "scope": "keyword.operator.escape-character.regex"
+  },
+  {
+    "selector": "invalid_control_letter_escape",
+    "scope": "constant.other.invalid.regex"
+  },
+  {
+    "selector": "start_assertion",
+    "scope": "keyword.control.anchor.regex"
+  },
+  {
+    "selector": "end_assertion",
+    "scope": "keyword.control.anchor.regex"
+  },
+  {
+    "selector": "boundary_assertion",
+    "scope": "keyword.control.anchor.regex"
+  },
+  {
+    "selector": "non_boundary_assertion",
+    "scope": "keyword.control.anchor.regex"
+  },
+  {
+    "selector": "character_class_escape > unicode_property_name",
+    "scope": "constant.other.character-class.unicode-property.name.regex"
+  },
+  {
+    "selector": "character_class_escape > unicode_property_operator",
+    "scope": "keyword.operator.character-class.unicode-property.regex"
+  },
+  {
+    "selector": "character_class_escape > unicode_property_value",
+    "scope": "constant.other.character-class.unicode-property.value.regex"
+  },
+  {
+    "selector": "unicode_codepoint_escape",
+    "scope": "constant.character.numeric.unicode.regex"
+  },
+  {
+    "selector": "unicode_codepoint_escape > unicode_code",
+    "scope": "constant.character.numeric.unicode.character-code.regex"
+  }
+]

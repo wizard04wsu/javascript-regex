@@ -1,28 +1,68 @@
 {
-	"name": "javascript-regex",
-	"version": "2.1.1",
-	"description": "Syntax highlighting for JavaScript regular expressions",
-	"keywords": [
-		"javascript",
-		"regex",
-		"regexp",
-		"syntax"
-	],
-	"repository": "https://github.com/wizard04wsu/javascript-regex",
-	"license": "MIT",
-	"main": "lib/javascript-regex.js",
-	"styleSheets": [],
-	"activationHooks": [
-		"source.js:root-scope-used",
-		"source.jsx:root-scope-used",
-		"source.ts:root-scope-used",
-		"source.flow:root-scope-used"
-	],
-	"engines": {
-		"atom": ">=1.0.0 <2.0.0"
-	},
-	"dependencies": {
-		"tree-sitter-regex-js": "^2.0.8",
-		"tree-sitter-regex-unicode-js": "^2.0.16"
-	}
+  "name": "regex-tree-sitter-highlighter",
+  "displayName": "JS Regex Tree-sitter Highlighter",
+  "description": "Highlights JavaScript/TypeScript regex literals using Tree-sitter (WASM) without replacing built-in JS semantic tokens.",
+  "version": "0.0.1",
+  "publisher": "wizard04wsu",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "JS Regex Tree-sitter Highlighter",
+      "properties": {
+        "regexTreeSitterHighlighter.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable regex literal highlighting."
+        },
+        "regexTreeSitterHighlighter.maxRegexLength": {
+          "type": "number",
+          "default": 5000,
+          "description": "Skip highlighting for regex literals longer than this many characters (pattern only)."
+        },
+        "regexTreeSitterHighlighter.debugLogNodeTypes": {
+          "type": "boolean",
+          "default": false,
+          "description": "Log Tree-sitter parse trees for regex patterns to the extension output channel."
+        },
+        "regexTreeSitterHighlighter.wasmPathRegex": {
+          "type": "string",
+          "default": "parsers/tree-sitter-regex-js.wasm",
+          "description": "Path (within the extension) to the non-unicode regex Tree-sitter WASM parser."
+        },
+        "regexTreeSitterHighlighter.wasmPathRegexUnicode": {
+          "type": "string",
+          "default": "parsers/tree-sitter-regex-unicode-js.wasm",
+          "description": "Path (within the extension) to the unicode regex Tree-sitter WASM parser."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.7.1",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "typescript": "^5.4.0",
+    "web-tree-sitter": "^0.25.8"
+  }
 }

@@ -1,23 +1,59 @@
-# javascript-regex
-[![](https://img.shields.io/apm/v/javascript-regex)](https://atom.io/packages/javascript-regex) [![](https://img.shields.io/apm/dm/javascript-regex)](https://atom.io/packages/javascript-regex)
+# JS Regex Tree-sitter Highlighter (Option B)
 
-Improved syntax for JavaScript regular expressions, with syntax highlighting.
+This VS Code extension highlights JavaScript/TypeScript **regex literals** by:
 
-![regex2](https://user-images.githubusercontent.com/695638/192731283-82db8798-d9b9-4f3f-8f13-7a90fb581810.gif)
+1. Using the **TypeScript scanner** to find true `RegularExpressionLiteral` tokens (so `/` division isn't mistaken for regex).
+2. Parsing the regex pattern with your Tree-sitter grammars compiled to **WASM** (`web-tree-sitter`).
+3. Applying VS Code **decorations** only to the regex pattern ranges, leaving VS Code's built-in JS/TS semantic tokens untouched.
 
-This package implements two tree-sitter parsers:
-- [tree-sitter-regex-unicode-js](https://github.com/wizard04wsu/tree-sitter-regex-unicode-js) for regular expressions that have the Unicode flag set
-- [tree-sitter-regex-js](https://github.com/wizard04wsu/tree-sitter-regex-js) for the rest
+## Setup
 
-## Troubleshooting
-#### If you're unable to install the package on Windows:
-Instead of installing it from within Atom, close Atom and try from the command line.
+### 1) Build WASM parsers
 
-	cd /d %USERPROFILE%\.atom\packages
-	rmdir /s /q javascript-regex
-	apm install javascript-regex
+From each grammar repo:
 
-#### If there's a failure loading the grammars when you open Atom:
-Whenever Atom is updated, this package needs to be rebuilt. Either click the red bug icon in the bottom-right corner of the window, or execute `Incompatible Packages: View` via the command palette. Then, click "Rebuild Packages". You'll have to restart Atom.
+- `tree-sitter-regex-js`
+- `tree-sitter-regex-unicode-js`
 
-If anyone has a better solution, please [let me know](https://github.com/wizard04wsu/javascript-regex/issues/9).
+Run:
+
+```bash
+npx tree-sitter generate --abi 15
+npx tree-sitter build --wasm
+```
+
+Copy the produced `.wasm` file into this extension:
+
+- `parsers/tree-sitter-regex-js.wasm`
+- `parsers/tree-sitter-regex-unicode-js.wasm`
+
+(Those filenames match the defaults in `settings.json`.)
+
+### 2) Install dependencies
+
+```bash
+npm install
+```
+
+### 3) Run the extension
+
+Open this folder in VS Code and press **F5** (Run Extension).
+
+## Configuration
+
+- `regexTreeSitterHighlighter.enable`
+- `regexTreeSitterHighlighter.maxRegexLength`
+- `regexTreeSitterHighlighter.debugLogNodeTypes`
+- `regexTreeSitterHighlighter.wasmPathRegex`
+- `regexTreeSitterHighlighter.wasmPathRegexUnicode`
+
+## Scope/Style mapping
+
+- `resources/scopeRules.json` was generated from your Atom Tree-sitter grammar CSON files.
+- The extension maps Atom scopes to a smaller set of VS Code decoration styles in `src/extension.ts` (`scopeToStyleKey`).
+
+## Notes / Limitations
+
+- Atom's *group outlines* and some nested background effects are hard to replicate exactly with VS Code decorations.
+  This starter focuses on reliable token coloring/backgrounds first; outlines can be approximated later with borders.
+- If you change node names in your grammars, update `resources/scopeRules.json` (or regenerate it).
