@@ -11,7 +11,7 @@ type CompiledRule = {
 };
 
 type StyleKey =
-  | "flag"
+    "flag"
   | "delimiter"
   | "pattern"
   | "invalid"
@@ -35,6 +35,7 @@ type StyleKey =
   | "unicodePropertyValue";
 
 const STYLE: Record<StyleKey, vscode.DecorationRenderOptions> = {
+/*
   flag: { color: "#7afd7a" },
   delimiter: { color: "#00ff00" },
   pattern: { color: "#7da672" },
@@ -66,6 +67,45 @@ const STYLE: Record<StyleKey, vscode.DecorationRenderOptions> = {
   unicodePropertyName: { color: "#56b6c2" },
   unicodePropertyOperator: { color: "#c678dd" },
   unicodePropertyValue: { color: "#56b6c2" },
+*/
+  
+
+
+
+  // Theme-aware decoration styles (no hard-coded hex colors)
+  // Note: background colors can't use opacity with ThemeColor.
+  
+  pattern: { color: new vscode.ThemeColor("string.regexp.js") },
+  flag: { color: new vscode.ThemeColor("string.regexp.js") },
+  delimiter: { color: new vscode.ThemeColor("editorBracketHighlight.foreground1") },
+  invalid: { color: new vscode.ThemeColor("invalid.illegal.regexp") },
+
+  disjunction: { color: new vscode.ThemeColor("keyword.operator.or.regexp") },
+
+  quantifier: { color: new vscode.ThemeColor("keyword.operator.quantifier.regexp") },
+  anchor: { color: new vscode.ThemeColor("keyword.control.anchor.regexp") },
+
+  groupDelimiter: { color: new vscode.ThemeColor("punctuation.definition.group.regexp") },
+  groupIdentifier: { color: new vscode.ThemeColor("keyword.operator.assertion.regexp") },
+  groupTag: { color: new vscode.ThemeColor("entity.name.group.regexp") },
+
+  backreference: { color: new vscode.ThemeColor("variable.other.backreference.regexp") },
+
+  charset: { backgroundColor: new vscode.ThemeColor("meta.character-class.regexp") },
+  charsetDelimiter: { color: new vscode.ThemeColor("punctuation.definition.character-class.regexp") },
+  charsetRangeDash: { color: new vscode.ThemeColor("constant.character.range.regexp") },
+
+  escape: { color: new vscode.ThemeColor("constant.character.escape.regexp") },
+  escapeOperator: { color: new vscode.ThemeColor("constant.character.escape.regexp") },
+
+  numeric: { color: new vscode.ThemeColor("symbolIcon.numberForeground") },
+  numericCharcode: { color: new vscode.ThemeColor("symbolIcon.numberForeground") },
+
+  characterClass: { color: new vscode.ThemeColor("symbolIcon.classForeground") },
+
+  unicodePropertyName: { color: new vscode.ThemeColor("support.property.regexp") },
+  unicodePropertyOperator: { color: new vscode.ThemeColor("support.property.regexp") },
+  unicodePropertyValue: { color: new vscode.ThemeColor("support.constant.property-value.regexp") },
 };
 
 // Map Atom-ish scope strings (from your CSON) to a VS Code decoration style key.

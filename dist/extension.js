@@ -39,61 +39,63 @@ const vscode = __importStar(require("vscode"));
 const ts = __importStar(require("typescript"));
 const web_tree_sitter_1 = require("web-tree-sitter");
 const STYLE = {
-    /*flag: { color: "#7afd7a" },
-    delimiter: { color: "#00ff00" },
-    pattern: { color: "#7da672" },
-    invalid: { color: "#ff0000" },
-  
-    disjunction: { color: "#ffffff" },
-  
-    quantifier: { color: "#e2608b" },
-    anchor: { color: "#ffffff" },
-  
-    groupDelimiter: { color: "#e8e888" },
-    groupIdentifier: { color: "#b5b57a" },
-    groupTag: { color: "#d3d3a0" },
-  
-    backreference: { color: "#ffa15d" },
-  
-    charset: { backgroundColor: "rgba(86,182,194,0.08)" },
-    charsetDelimiter: { color: "#88eeee" },
-    charsetRangeDash: { color: "#88eeee" },
-  
-    escape: { color: "#61afef" },
-    escapeOperator: { color: "#c678dd" },
-  
-    numeric: { color: "#d19a66" },
-    numericCharcode: { color: "#b07d4e" },
-  
-    characterClass: { color: "#56b6c2" },
-  
-    unicodePropertyName: { color: "#56b6c2" },
-    unicodePropertyOperator: { color: "#c678dd" },
-    unicodePropertyValue: { color: "#56b6c2" },*/
+    /*
+      flag: { color: "#7afd7a" },
+      delimiter: { color: "#00ff00" },
+      pattern: { color: "#7da672" },
+      invalid: { color: "#ff0000" },
+    
+      disjunction: { color: "#ffffff" },
+    
+      quantifier: { color: "#e2608b" },
+      anchor: { color: "#ffffff" },
+    
+      groupDelimiter: { color: "#e8e888" },
+      groupIdentifier: { color: "#b5b57a" },
+      groupTag: { color: "#d3d3a0" },
+    
+      backreference: { color: "#ffa15d" },
+    
+      charset: { backgroundColor: "rgba(86,182,194,0.08)" },
+      charsetDelimiter: { color: "#88eeee" },
+      charsetRangeDash: { color: "#88eeee" },
+    
+      escape: { color: "#61afef" },
+      escapeOperator: { color: "#c678dd" },
+    
+      numeric: { color: "#d19a66" },
+      numericCharcode: { color: "#b07d4e" },
+    
+      characterClass: { color: "#56b6c2" },
+    
+      unicodePropertyName: { color: "#56b6c2" },
+      unicodePropertyOperator: { color: "#c678dd" },
+      unicodePropertyValue: { color: "#56b6c2" },
+    */
     // Theme-aware decoration styles (no hard-coded hex colors)
-    flag: { color: new vscode.ThemeColor("editorInfo.foreground") || "#7afd7a" },
-    delimiter: { color: new vscode.ThemeColor("editorBracketHighlight.foreground1") || "#00ff00" },
-    pattern: { color: new vscode.ThemeColor("editor.foreground") || "#7da672" },
-    invalid: { color: new vscode.ThemeColor("editorError.foreground") || "#ff0000" },
-    disjunction: { color: new vscode.ThemeColor("editor.foreground") || "#ffffff" },
-    quantifier: { color: new vscode.ThemeColor("editorWarning.foreground") || "#e2608b" },
-    anchor: { color: new vscode.ThemeColor("editorBracketHighlight.foreground2") || "#ffffff" },
-    groupDelimiter: { color: new vscode.ThemeColor("editorBracketHighlight.foreground3") || "#e8e888" },
-    groupIdentifier: { color: new vscode.ThemeColor("editorBracketHighlight.foreground4") || "#b5b57a" },
-    groupTag: { color: new vscode.ThemeColor("editorBracketHighlight.foreground5") || "#d3d3a0" },
-    backreference: { color: new vscode.ThemeColor("editorWarning.foreground") || "#ffa15d" },
-    // Background colors can't use opacity with ThemeColor, so pick a subtle theme background token:
-    charset: { backgroundColor: new vscode.ThemeColor("editor.wordHighlightBackground") },
-    charsetDelimiter: { color: new vscode.ThemeColor("editorBracketHighlight.foreground3") || "#88eeee" },
-    charsetRangeDash: { color: new vscode.ThemeColor("editorBracketHighlight.foreground3") || "#88eeee" },
-    escape: { color: new vscode.ThemeColor("editorInfo.foreground") || "#61afef" },
-    escapeOperator: { color: new vscode.ThemeColor("editorBracketHighlight.foreground6") || "#c678dd" },
-    numeric: { color: new vscode.ThemeColor("symbolIcon.numberForeground") || "#d19a66" },
-    numericCharcode: { color: new vscode.ThemeColor("symbolIcon.numberForeground") || "#b07d4e" },
-    characterClass: { color: new vscode.ThemeColor("symbolIcon.classForeground") || "#56b6c2" },
-    unicodePropertyName: { color: new vscode.ThemeColor("symbolIcon.propertyForeground") || "#56b6c2" },
-    unicodePropertyOperator: { color: new vscode.ThemeColor("editorBracketHighlight.foreground6") || "#c678dd" },
-    unicodePropertyValue: { color: new vscode.ThemeColor("symbolIcon.propertyForeground") || "#56b6c2" },
+    // Note: background colors can't use opacity with ThemeColor.
+    pattern: { color: new vscode.ThemeColor("string.regexp.js") },
+    flag: { color: new vscode.ThemeColor("string.regexp.js") },
+    delimiter: { color: new vscode.ThemeColor("editorBracketHighlight.foreground1") },
+    invalid: { color: new vscode.ThemeColor("invalid.illegal.regexp") },
+    disjunction: { color: new vscode.ThemeColor("keyword.operator.or.regexp") },
+    quantifier: { color: new vscode.ThemeColor("keyword.operator.quantifier.regexp") },
+    anchor: { color: new vscode.ThemeColor("keyword.control.anchor.regexp") },
+    groupDelimiter: { color: new vscode.ThemeColor("punctuation.definition.group.regexp") },
+    groupIdentifier: { color: new vscode.ThemeColor("keyword.operator.assertion.regexp") },
+    groupTag: { color: new vscode.ThemeColor("entity.name.group.regexp") },
+    backreference: { color: new vscode.ThemeColor("variable.other.backreference.regexp") },
+    charset: { backgroundColor: new vscode.ThemeColor("meta.character-class.regexp") },
+    charsetDelimiter: { color: new vscode.ThemeColor("punctuation.definition.character-class.regexp") },
+    charsetRangeDash: { color: new vscode.ThemeColor("constant.character.range.regexp") },
+    escape: { color: new vscode.ThemeColor("constant.character.escape.regexp") },
+    escapeOperator: { color: new vscode.ThemeColor("constant.character.escape.regexp") },
+    numeric: { color: new vscode.ThemeColor("symbolIcon.numberForeground") },
+    numericCharcode: { color: new vscode.ThemeColor("symbolIcon.numberForeground") },
+    characterClass: { color: new vscode.ThemeColor("symbolIcon.classForeground") },
+    unicodePropertyName: { color: new vscode.ThemeColor("support.property.regexp") },
+    unicodePropertyOperator: { color: new vscode.ThemeColor("support.property.regexp") },
+    unicodePropertyValue: { color: new vscode.ThemeColor("support.constant.property-value.regexp") },
 };
 // Map Atom-ish scope strings (from your CSON) to a VS Code decoration style key.
 function scopeToStyleKey(scope) {
