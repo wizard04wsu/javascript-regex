@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as ts from "typescript";
 import { Parser, Language, type Node } from "web-tree-sitter";
+import colorMap from "./colorMap.js";
 
 type Rule = { selector: string; scope: string };
 type SelectorParts = string[]; // split on '>'
@@ -11,137 +12,356 @@ type CompiledRule = {
 };
 
 type StyleKey =
-    "flag"
+  // Basic elements
+  | "flag"
   | "delimiter"
   | "pattern"
   | "invalid"
+  
+  // Operators
   | "disjunction"
-  | "quantifier"
+  
+  // Anchors / assertions
   | "anchor"
+  | "lookaround"
+  
+  // Quantifiers
+  | "quantifier"
+  | "quantifierContent"  // numbers and delimiters inside {n,m}
+  
+  // Groups - Non-capturing
   | "groupDelimiter"
   | "groupIdentifier"
-  | "groupTag"
+  
+  // Groups - Capturing
+  | "groupDelimiterCapturing"
+  | "groupIdentifierCapturing"
+  | "groupTagCapturing"
+  
+  // Backreferences
   | "backreference"
-  | "charset"
+  | "backreferenceTag"
+  
+  // Character sets - structure
+  | "charsetBackground"
   | "charsetDelimiter"
+  | "charsetNonSyntax"
+  
+  // Character sets - ranges
+  | "charsetRangeBackground"
   | "charsetRangeDash"
-  | "escape"
-  | "escapeOperator"
-  | "numeric"
-  | "numericCharcode"
+  
+  // Character escapes (outside sets)
+  | "identityEscape"
+  | "identityEscapeBackslash"
+  | "numericEscape"
+  | "numericEscapeCode"
+  | "specialEscape"
+  
+  // Character classes (outside sets)
   | "characterClass"
+  | "characterClassAny"  // . (any character)
+  
+  // Unicode properties (outside sets)
   | "unicodePropertyName"
+  | "unicodePropertyValue"
   | "unicodePropertyOperator"
-  | "unicodePropertyValue";
+  
+  // Inside character sets - escapes
+  | "charsetIdentityEscape"
+  | "charsetNumericEscape"
+  | "charsetNumericEscapeCode"
+  | "charsetSpecialEscape"
+  
+  // Inside character sets - character classes
+  | "charsetCharacterClass"
+  | "charsetCharacterClassAny"
+  
+  // Inside character sets - unicode properties
+  | "charsetUnicodePropertyName"
+  | "charsetUnicodePropertyValue"
+  | "charsetUnicodePropertyOperator";
 
+// Complete style definitions from Atom LESS files
 const STYLE: Record<StyleKey, vscode.DecorationRenderOptions> = {
-/*
-  flag: { color: "#7afd7a" },
-  delimiter: { color: "#00ff00" },
-  pattern: { color: "#7da672" },
-  invalid: { color: "#ff0000" },
-
-  disjunction: { color: "#ffffff" },
-
-  quantifier: { color: "#e2608b" },
-  anchor: { color: "#ffffff" },
-
-  groupDelimiter: { color: "#e8e888" },
-  groupIdentifier: { color: "#b5b57a" },
-  groupTag: { color: "#d3d3a0" },
-
-  backreference: { color: "#ffa15d" },
-
-  charset: { backgroundColor: "rgba(86,182,194,0.08)" },
-  charsetDelimiter: { color: "#88eeee" },
-  charsetRangeDash: { color: "#88eeee" },
-
-  escape: { color: "#61afef" },
-  escapeOperator: { color: "#c678dd" },
-
-  numeric: { color: "#d19a66" },
-  numericCharcode: { color: "#b07d4e" },
-
-  characterClass: { color: "#56b6c2" },
-
-  unicodePropertyName: { color: "#56b6c2" },
-  unicodePropertyOperator: { color: "#c678dd" },
-  unicodePropertyValue: { color: "#56b6c2" },
-*/
   
+  // Core / structural
+  delimiter:          { color: new vscode.ThemeColor("editorBracketHighlight.foreground1") },
+  pattern:            { color: new vscode.ThemeColor("editor.foreground") },
+  flag:               { color: new vscode.ThemeColor("editorInfo.foreground") },
 
+  // Errors / invalid syntax
+  invalid:            { color: new vscode.ThemeColor("editorError.foreground") },
 
+  // Operators
+  disjunction:        { color: new vscode.ThemeColor("editorOperator.foreground") },  // |
+  quantifier:         { color: new vscode.ThemeColor("editorOperator.foreground") },  // *, +, ?, {__}
 
-  // Theme-aware decoration styles (no hard-coded hex colors)
-  // Note: background colors can't use opacity with ThemeColor.
-  
-  pattern: { color: new vscode.ThemeColor("string.regexp.js") },
-  flag: { color: new vscode.ThemeColor("string.regexp.js") },
-  delimiter: { color: new vscode.ThemeColor("editorBracketHighlight.foreground1") },
-  invalid: { color: new vscode.ThemeColor("invalid.illegal.regexp") },
+  // Anchors / assertions
+  anchor:             { color: new vscode.ThemeColor("editorWarning.foreground") },  // ^, $, \b, \B
+  lookaround:         { color: new vscode.ThemeColor("editorWarning.foreground") },
 
-  disjunction: { color: new vscode.ThemeColor("keyword.operator.or.regexp") },
+  // Groups
+  groupDelimiter:     { color: new vscode.ThemeColor("editorBracketHighlight.foreground2") },  // ( )
+  groupIdentifier:    { color: new vscode.ThemeColor("symbolIcon.variableForeground") },       // ?<name>
+  groupTagCapturing:           { color: new vscode.ThemeColor("symbolIcon.variableForeground") },
 
-  quantifier: { color: new vscode.ThemeColor("keyword.operator.quantifier.regexp") },
-  anchor: { color: new vscode.ThemeColor("keyword.control.anchor.regexp") },
+  // Backreferences
+  backreference:      { color: new vscode.ThemeColor("symbolIcon.variableForeground") },
 
-  groupDelimiter: { color: new vscode.ThemeColor("punctuation.definition.group.regexp") },
-  groupIdentifier: { color: new vscode.ThemeColor("keyword.operator.assertion.regexp") },
-  groupTag: { color: new vscode.ThemeColor("entity.name.group.regexp") },
+  // Character classes
+  charset:            { backgroundColor: new vscode.ThemeColor("editor.wordHighlightBackground") },
+  charsetDelimiter:   { color: new vscode.ThemeColor("editorBracketHighlight.foreground3") },  // [ ]
+  charsetRangeDash:   { color: new vscode.ThemeColor("editorOperator.foreground") },           // -
 
-  backreference: { color: new vscode.ThemeColor("variable.other.backreference.regexp") },
+  // Escapes
+  escape:             { color: new vscode.ThemeColor("editorInfo.foreground") },
+  escapeOperator:     { color: new vscode.ThemeColor("editorOperator.foreground") },
 
-  charset: { backgroundColor: new vscode.ThemeColor("meta.character-class.regexp") },
-  charsetDelimiter: { color: new vscode.ThemeColor("punctuation.definition.character-class.regexp") },
-  charsetRangeDash: { color: new vscode.ThemeColor("constant.character.range.regexp") },
+  // Numbers
+  numeric:            { color: new vscode.ThemeColor("symbolIcon.numberForeground") },
+  numericCharcode:    { color: new vscode.ThemeColor("symbolIcon.numberForeground") },
 
-  escape: { color: new vscode.ThemeColor("constant.character.escape.regexp") },
-  escapeOperator: { color: new vscode.ThemeColor("constant.character.escape.regexp") },
+  // Unicode properties
+  unicodePropertyName:{ color: new vscode.ThemeColor("symbolIcon.propertyForeground") },
+  unicodePropertyOperator:{ color: new vscode.ThemeColor("editorOperator.foreground") },
+  unicodePropertyValue:{ color: new vscode.ThemeColor("symbolIcon.propertyForeground") },
 
-  numeric: { color: new vscode.ThemeColor("symbolIcon.numberForeground") },
-  numericCharcode: { color: new vscode.ThemeColor("symbolIcon.numberForeground") },
-
-  characterClass: { color: new vscode.ThemeColor("symbolIcon.classForeground") },
-
-  unicodePropertyName: { color: new vscode.ThemeColor("support.property.regexp") },
-  unicodePropertyOperator: { color: new vscode.ThemeColor("support.property.regexp") },
-  unicodePropertyValue: { color: new vscode.ThemeColor("support.constant.property-value.regexp") },
+  // Fallback / unknown
+  unknown:            { color: new vscode.ThemeColor("editor.foreground") },
 };
 
-// Map Atom-ish scope strings (from your CSON) to a VS Code decoration style key.
-function scopeToStyleKey(scope: string): StyleKey | null {
-  if (scope.includes("invalid")) return "invalid";
-  if (scope.includes(".anchor.")) return "anchor";
-  if (scope.includes(".quantifier.")) return "quantifier";
-  if (scope.includes(".disjunction.")) return "disjunction";
-
-  if (scope.includes("punctuation.definition.group")) return "groupDelimiter";
-  if (scope.includes("entity.name.type.") || scope.includes("entity.name.tag.")) {
-    // identifiers like (?:, (?=, (?<name>), and tags (name)
-    // If you want capturing vs non-capturing to differ later, split here.
-    return scope.includes("tag") ? "groupTag" : "groupIdentifier";
+// Helper to determine if a node is inside a character class
+function isInsideCharacterClass(node: Node): boolean {
+  let current: Node | null = node;
+  while (current) {
+    if (current.type === "character_class") {
+      return true;
+    }
+    current = current.parent;
   }
+  return false;
+}
 
-  if (scope.includes("back-reference")) return "backreference";
-
-  if (scope.includes("character-class.set")) return "charset";
-  if (scope.includes("character-class.set.begin") || scope.includes("character-class.set.end")) return "charsetDelimiter";
-  if (scope.includes("character-class.range.hyphen")) return "charsetRangeDash";
-  if (scope.includes("character-class.escape")) return "characterClass";
-
-  if (scope.includes("unicode-property.name")) return "unicodePropertyName";
-  if (scope.includes("unicode-property.value")) return "unicodePropertyValue";
-  if (scope.includes("unicode-property")) return "unicodePropertyOperator";
-
-  if (scope.includes("keyword.operator.escape-character")) return "escapeOperator";
-
-  if (scope.includes("character.numeric")) {
-    return scope.includes("character-code") ? "numericCharcode" : "numeric";
+// Helper to determine if a group is capturing
+function isCapturingGroup(node: Node): boolean {
+  let current: Node | null = node;
+  while (current) {
+    if (current.type === "named_capturing_group" || current.type === "anonymous_capturing_group") {
+      return true;
+    }
+    // Check if this is an assertion (lookahead/lookbehind) - these are non-capturing
+    if (current.type.includes("assertion")) {
+      return false;
+    }
+    current = current.parent;
   }
+  return false;
+}
 
-  // default for escapes
-  if (scope.includes("constant.character") || scope.includes("escape")) return "escape";
+// Helper to check if we're inside a backreference (for tag coloring)
+function isInsideBackreference(node: Node): boolean {
+  let current: Node | null = node;
+  while (current) {
+    if (current.type === "numeric_backreference" || current.type === "named_backreference") {
+      return true;
+    }
+    current = current.parent;
+  }
+  return false;
+}
 
+// Helper to check if we're inside a quantifier (for content coloring)
+function isInsideQuantifier(node: Node): boolean {
+  let current: Node | null = node;
+  while (current) {
+    if (current.type === "count_quantifier") {
+      return true;
+    }
+    current = current.parent;
+  }
+  return false;
+}
+
+/**
+ * Maps Atom scope strings to VSCode decoration style keys.
+ * Implements all the styling logic from base.less.
+ */
+function scopeToStyleKey(scope: string, node: Node): StyleKey | null {
+  const insideCharset = isInsideCharacterClass(node);
+  const isCapturing = isCapturingGroup(node);
+  const inBackreference = isInsideBackreference(node);
+  const inQuantifier = isInsideQuantifier(node);
+  
+  // ============================================================================
+  // INVALID (base.less lines 14-22)
+  // ============================================================================
+  
+  if (scope.includes("invalid")) {
+    return "invalid";
+  }
+  
+  // ============================================================================
+  // ANCHORS (base.less lines 34-37)
+  // ============================================================================
+  
+  if (scope.includes("keyword.control.anchor")) {
+    return "anchor";
+  }
+  
+  // ============================================================================
+  // DISJUNCTION (base.less lines 29-32)
+  // ============================================================================
+  
+  if (scope.includes("keyword.operator.disjunction")) {
+    return "disjunction";
+  }
+  
+  // ============================================================================
+  // QUANTIFIERS (base.less lines 230-238)
+  // ============================================================================
+  
+  if (scope.includes("keyword.operator.quantifier")) {
+    // Content inside quantifiers (numbers and delimiters)
+    if (scope.includes("constant.numeric") || scope.includes("punctuation.definition.quantifier")) {
+      return "quantifierContent";
+    }
+    return "quantifier";
+  }
+  
+  // ============================================================================
+  // GROUPS (base.less lines 165-210)
+  // ============================================================================
+  
+  // Group delimiters ( and )
+  if (scope.includes("punctuation.definition.group")) {
+    return isCapturing ? "groupDelimiterCapturing" : "groupDelimiter";
+  }
+  
+  // Group identifiers (?: ?= ?! ?<= ?<! ?<name>)
+  if (scope.includes("entity.name.type.")) {
+    return isCapturing ? "groupIdentifierCapturing" : "groupIdentifier";
+  }
+  
+  // ============================================================================
+  // GROUP NAMES & TAGS (base.less lines 188-198, 204-208)
+  // ============================================================================
+  
+  if (scope.includes("entity.name.tag")) {
+    // In backreferences (base.less lines 216-226)
+    if (inBackreference) {
+      return "backreferenceTag";
+    }
+    // In quantifiers - use quantifierContent
+    if (inQuantifier) {
+      return "quantifierContent";
+    }
+    // In capturing groups
+    return "groupTagCapturing";
+  }
+  
+  // ============================================================================
+  // BACKREFERENCES (base.less lines 212-227)
+  // ============================================================================
+  
+  if (scope.includes("keyword.other.back-reference")) {
+    return "backreference";
+  }
+  
+  // ============================================================================
+  // CHARACTER SETS (base.less lines 86-163, charset-backgrounds.less)
+  // ============================================================================
+  
+  if (scope.includes("character-class.set")) {
+    // Set delimiters [ ] and negation ^
+    if (scope.includes("punctuation.definition") || scope.includes("keyword.operator.negation")) {
+      return "charsetDelimiter";
+    }
+    
+    // Range hyphen
+    if (scope.includes("range.hyphen") || scope.includes("range-delimiter")) {
+      return "charsetRangeDash";
+    }
+    
+    // Generic characters inside the set (base.less lines 95-98)
+    if (scope.includes("string.other")) {
+      return "charsetNonSyntax";
+    }
+    
+    // The set itself gets a background
+    return "charsetBackground";
+  }
+  
+  // ============================================================================
+  // CHARACTER ESCAPES (base.less lines 39-68 outside, 100-129 inside)
+  // ============================================================================
+  
+  if (scope.includes("constant.character")) {
+    
+    // Identity escape (base.less lines 42-51 outside, 104-112 inside)
+    if (scope.includes("escape.backslash") && !scope.includes("numeric") && !scope.includes("control") && !scope.includes("special")) {
+      // The backslash operator itself
+      if (scope.includes("keyword.operator.escape-character")) {
+        return insideCharset ? "charsetIdentityEscape" : "identityEscapeBackslash";
+      }
+      // The escaped character
+      return insideCharset ? "charsetIdentityEscape" : "identityEscape";
+    }
+    
+    // Numeric and control escapes (base.less lines 53-62 outside, 114-123 inside)
+    if (scope.includes("numeric") || scope.includes("control")) {
+      // The character code part
+      if (scope.includes("character-code")) {
+        return insideCharset ? "charsetNumericEscapeCode" : "numericEscapeCode";
+      }
+      // The escape itself
+      return insideCharset ? "charsetNumericEscape" : "numericEscape";
+    }
+    
+    // Special escapes (base.less lines 64-67 outside, 125-128 inside)
+    if (scope.includes("special")) {
+      return insideCharset ? "charsetSpecialEscape" : "specialEscape";
+    }
+  }
+  
+  // ============================================================================
+  // CHARACTER CLASSES (base.less lines 70-84 outside, 131-150 inside)
+  // ============================================================================
+  
+  if (scope.includes("constant.other.character-class")) {
+    
+    // Any character . (appears as character-class.any)
+    if (scope.includes(".any")) {
+      return insideCharset ? "charsetCharacterClassAny" : "characterClassAny";
+    }
+    
+    // Unicode properties (base.less lines 75-83 outside, 139-148 inside)
+    if (scope.includes("unicode-property")) {
+      if (scope.includes(".name")) {
+        return insideCharset ? "charsetUnicodePropertyName" : "unicodePropertyName";
+      }
+      if (scope.includes(".value")) {
+        return insideCharset ? "charsetUnicodePropertyValue" : "unicodePropertyValue";
+      }
+      if (scope.includes(".operator")) {
+        return insideCharset ? "charsetUnicodePropertyOperator" : "unicodePropertyOperator";
+      }
+    }
+    
+    // Character class escapes \d \w \s etc. (base.less line 135-138)
+    if (scope.includes("escape") || scope.includes("character-class")) {
+      return insideCharset ? "charsetCharacterClass" : "characterClass";
+    }
+  }
+  
+  // ============================================================================
+  // GENERIC CHARACTERS (base.less lines 24-27)
+  // ============================================================================
+  
+  if (scope.includes("string.other")) {
+    return "pattern";
+  }
+  
   return null;
 }
 
@@ -188,11 +408,10 @@ function getRegexLiteralSpans(
 
   const visit = (node: ts.Node) => {
     if (node.kind === ts.SyntaxKind.RegularExpressionLiteral) {
-      // getStart excludes leading trivia; regex literals shouldn't have trivia, but this is safest
       const start = node.getStart(sourceFile);
       const end = node.getEnd();
       spans.push({ start, end, literal: text.slice(start, end) });
-      return; // no need to go deeper
+      return;
     }
     ts.forEachChild(node, visit);
   };
@@ -202,10 +421,8 @@ function getRegexLiteralSpans(
 }
 
 function splitRegexLiteral(literal: string): { pattern: string; flags: string } | null {
-  // TS already confirmed it's a regex literal token, so we can be simpler.
   if (!literal.startsWith("/")) return null;
 
-  // trailing flags
   let i = literal.length - 1;
   while (i > 0 && /[a-z]/i.test(literal[i])) i--;
 
@@ -224,7 +441,6 @@ function compileRules(rules: Rule[]): CompiledRule[] {
 }
 
 function matchRule(node: Node, rule: CompiledRule): boolean {
-  // rule.parts like ["identity_escape", "escape_operator"]
   let cur: Node | null = node;
   for (let idx = rule.parts.length - 1; idx >= 0; idx--) {
     if (!cur) return false;
@@ -271,11 +487,9 @@ function chooseParser(flags: string): Parser {
   return flags.includes("u") ? (parserRegexU as Parser) : (parserRegex as Parser);
 }
 
-// ---- Load your CSON-derived rules (compiled into JSON) ----
-const RULES: Rule[] = require("../resources/scopeRules.json");
+const RULES: Rule[] = require("../resources/colorMap.json");
 const COMPILED_RULES = compileRules(RULES);
 
-// Create decoration types for each StyleKey once.
 function createDecorationTypes(): Record<StyleKey, vscode.TextEditorDecorationType> {
   const out = {} as Record<StyleKey, vscode.TextEditorDecorationType>;
   (Object.keys(STYLE) as StyleKey[]).forEach(k => {
@@ -335,17 +549,16 @@ export async function activate(context: vscode.ExtensionContext) {
 
       const patternOffset = s.start + 1; // after leading /
 
-      // Very lightweight base styling:
-      // - delimiters `/` and flags are outside pattern; we can decorate them too
+      // Delimiters and flags
       add("delimiter", s.start, s.start + 1);
-      add("delimiter", s.start + 1 + pattern.length, s.start + 2 + pattern.length); // closing /
+      add("delimiter", s.start + 1 + pattern.length, s.start + 2 + pattern.length);
       if (flags.length) add("flag", s.end - flags.length, s.end);
 
       // Walk nodes and apply first matching rule => style key
       walk(tree.rootNode, (node) => {
         for (const rule of COMPILED_RULES) {
           if (!matchRule(node, rule)) continue;
-          const styleKey = scopeToStyleKey(rule.scope);
+          const styleKey = scopeToStyleKey(rule.scope, node);
           if (!styleKey) continue;
 
           const start = patternOffset + node.startIndex;
@@ -382,8 +595,6 @@ export async function activate(context: vscode.ExtensionContext) {
   );
 
   if (vscode.window.activeTextEditor) scheduleRefresh(vscode.window.activeTextEditor);
-
-  //output.appendLine("Extension activated.");
 }
 
 export function deactivate() {}

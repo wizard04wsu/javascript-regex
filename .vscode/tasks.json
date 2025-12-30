@@ -1,0 +1,28 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Install Dependencies",
+			"type": "shell",
+			"command": "npm install",
+			"icon": {
+				"id": "cloud-download",
+				"color": "charts.blue"
+			}
+		},
+		{
+			"label": "Build",
+			"type": "npm",
+			"script": "build",
+			"group": "build",
+			"presentation": {
+				"clear": true,
+				"reveal": "silent",
+				"showReuseMessage": false
+			},
+			"detail": "Build with source maps."
+		},
+	]
+}

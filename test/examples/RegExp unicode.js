@@ -172,7 +172,7 @@
 
 //invalid
 /\-/u;
-/\a/u;	//escaping any non-syntax character is invalid
+/\a/u;	//escaping any generic character is invalid
 /[\a]/u;
 /\a_/u;
 /[\a_]/u;

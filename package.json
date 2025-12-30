@@ -63,6 +63,6 @@
   },
   "dependencies": {
     "typescript": "^5.4.0",
-    "web-tree-sitter": "^0.25.8"
+    "web-tree-sitter": "^0.26.0"
   }
 }

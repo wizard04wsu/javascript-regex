@@ -144,7 +144,7 @@
 /[\x-z]/;
 
 //accepted
-//`-` is treated as a non-syntax character
+//`-` is treated as a generic character
 /[\w-a]/;
 /[\w-~]/;
 
@@ -271,7 +271,7 @@ new RegExp('[');
 /\?*/;
 
 //accepted;
-//curly braces are treated as non-syntax characters
+//curly braces are treated as generic characters
 /a{/;
 /a{z/;
 /a{z_/;
