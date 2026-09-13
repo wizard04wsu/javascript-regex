@@ -4,8 +4,8 @@
     "scope": "meta.pattern.regex"
   },
   {
-    "selector": "non_syntax",
-    "scope": "string.other.non-syntax"
+    "selector": "character",
+    "scope": "string.other"
   },
   {
     "selector": "invalid",
